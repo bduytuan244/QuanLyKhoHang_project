@@ -23,6 +23,13 @@ namespace QuanLyKhoHang.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task <IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            TempData["SuccessMessage"] = "Success Logout";
+            return RedirectToAction("Login", "Account");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
