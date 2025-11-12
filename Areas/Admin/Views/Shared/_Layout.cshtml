@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - QuanLyKhoHang</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <link rel="stylesheet" href="~/QuanLyKhoHang.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
@@ -32,6 +33,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-primary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">CMS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="fab fa-product-hunt"></i>Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Stock" asp-action="Index"><i class="fas fa-warehouse"></i>Stock</a>
                             </li>
                         }
                         else
