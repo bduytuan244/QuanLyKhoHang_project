@@ -40,7 +40,7 @@ namespace QuanLyKhoHang.Controllers
             if (result.Succeeded)
             {
                 TempData["SuccessMessage"] = "Success Login";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Admin");
             }
 
             return View();
