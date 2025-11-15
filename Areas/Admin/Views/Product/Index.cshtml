@@ -1,7 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Product";
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "List Product";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Product</h1>
+    <h1 class="display-4">List Product</h1>
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Create"> Create Product </a>
+
 </div>
