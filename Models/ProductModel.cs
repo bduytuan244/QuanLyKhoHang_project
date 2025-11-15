@@ -5,23 +5,34 @@ namespace QuanLyKhoHang.Models
     public class ProductModel
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Vui long nhap ma san pham")]
         [StringLength(100)]
         public string ProductCode { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Vui long nhap ten san pham")]
         [StringLength(200)]
         public string ProductName { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Vui long nhap mo ta san pham")]
         [StringLength(100)]
         public string ProductDescription { get; set; }
-        [Required]
-        [Range(0, int.MaxValue)]
+
+        [Range(0, int.MaxValue, ErrorMessage = "So luong phai lon hon hoac bang 0")]
         public int ProductQuantity { get; set; }
+
         [Required]
         [StringLength(100)]
         public string ProductUnit { get; set; }
+
         [Required]
         public string Location { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime CreateDate { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime UpdateDate { get; set; }
+
 
     }
 }
