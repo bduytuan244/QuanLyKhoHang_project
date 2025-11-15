@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoHang.Models;
 using QuanLyKhoHang.Repository;
-
+using X.PagedList.Extensions;
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
     [Authorize]
@@ -15,10 +15,15 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
             var products = _dbContext.Products.OrderBy(p => p.Id);
-            return View(products);
+
+            var pagedProducts = products.ToPagedList(pageNumber, pageSize);
+            return View(pagedProducts);
         }
         [HttpGet]
 

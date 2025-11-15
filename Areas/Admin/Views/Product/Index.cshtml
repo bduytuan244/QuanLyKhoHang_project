@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProductModel>
+﻿@model X.PagedList.IPagedList<ProductModel>
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "List Product";
 }
@@ -55,4 +56,14 @@
             }
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new {page}), new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item"},
+        PageClasses = new[] {"page-link"},
+        UlElementClasses = new[] {"pagination"},
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always
+    })
 </div>
