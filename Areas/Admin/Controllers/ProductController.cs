@@ -17,7 +17,8 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var products = _dbContext.Products.OrderBy(p => p.Id);
+            return View(products);
         }
         [HttpGet]
 
@@ -40,6 +41,18 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Product");
             }
             return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _dbContext.Products.Remove(product);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index", "Product");
         }
     }
 }
