@@ -37,7 +37,7 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
 
                 await _dbContext.Products.AddAsync(model);
                 await _dbContext.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Add product successful";
+                TempData["SuccessMessage"] = "Add product successfull";
                 return RedirectToAction("Index", "Product");
             }
             return View(model);
@@ -53,6 +53,46 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
             _dbContext.Products.Remove(product);
             _dbContext.SaveChanges();
             return RedirectToAction("Index", "Product");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductModel model, int id)
+        {
+            if(id != model.Id)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+                if(product == null)
+                {
+                    return NotFound();
+                }
+                product.ProductCode = model.ProductCode;
+                product.ProductName = model.ProductName;   
+                product.ProductUnit = model.ProductUnit;
+                product.ProductQuantity = model.ProductQuantity;
+                product.Location = model.Location;
+                product.ProductDescription = model.ProductDescription;
+                product.UpdateDate = DateTime.Now;
+
+                _dbContext.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Update product successfull";
+                return RedirectToAction("Index", "Product");
+            }
+            return View(model);
         }
     }
 }
