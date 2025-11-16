@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuanLyKhoHang.Repository;
 
@@ -11,9 +12,11 @@ using QuanLyKhoHang.Repository;
 namespace QuanLyKhoHang.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20251116083029_SupplierMigration")]
+    partial class SupplierMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -322,9 +325,6 @@ namespace QuanLyKhoHang.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 
@@ -336,8 +336,6 @@ namespace QuanLyKhoHang.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("WarehouseTransactions");
                 });
@@ -401,15 +399,7 @@ namespace QuanLyKhoHang.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("QuanLyKhoHang.Models.SupplierModel", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("Supplier");
                 });
 #pragma warning restore 612, 618
         }

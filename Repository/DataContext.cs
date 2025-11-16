@@ -13,5 +13,7 @@ namespace QuanLyKhoHang.Repository
 
         public DbSet<WarehouseTransactionModel> WarehouseTransactions { get; set; }
 
+        public DbSet<SupplierModel> Supplier { get; set; }
+
     }
 }
