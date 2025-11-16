@@ -10,5 +10,8 @@ namespace QuanLyKhoHang.Repository
         {
         }
         public DbSet<ProductModel> Products { get; set; }
+
+        public DbSet<WarehouseTransactionModel> WarehouseTransactions { get; set; }
+
     }
 }
