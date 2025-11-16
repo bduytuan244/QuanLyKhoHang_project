@@ -1,0 +1,54 @@
+﻿@* @model X.PagedList.IPagedList<SupplierModel>
+@using X.PagedList.Mvc.Core *@
+@model List<SupplierModel>
+@{
+    ViewData["Title"] = "List Supplier";
+}
+
+<div class="text-center">
+    <h1 class="display-4">List Product</h1>
+    <a class="btn btn-primary" asp-controller="Supplier" asp-action="Create"> Create Supplier </a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Địa chỉ</th>
+                <th>Điện Thoại</th>
+                <th>Email</th>
+                <th>Hành động</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.Name</td>
+                        <td>@s.Address</td>
+                        <td>@s.Phone</td>
+                        <td>@s.Email</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-warning">Sửa</a>
+                            <form asp-action="Delete" asp-route-id="@s.Id"  method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+    @* @Html.PagedListPager(Model, page => Url.Action("Index", new {page}), new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        UlElementClasses = new[] { "pagination" },
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always
+        }) *@
+</div>
