@@ -71,7 +71,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             var data = await _dbContext.WarehouseTransactions
              .Include(t => t.Product)
-             .Include(t => t.Supplier) // include Supplier
              .OrderByDescending(t => t.TransactionDate)
              .Where(t => t.TransactionType == type)
              .ToListAsync();
@@ -86,7 +85,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
             worksheet.Cell(1, 4).Value = "Ngày giao dịch";
             worksheet.Cell(1, 5).Value = "Ghi chú";
             worksheet.Cell(1, 6).Value = "Tình trạng";
-            worksheet.Cell(1, 7).Value = "Nhà cung cấp";
 
             // Data
             int row = 2;
@@ -99,7 +97,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
                 worksheet.Cell(row, 4).Value = item.TransactionDate.ToString("dd/MM/yyyy HH:mm");
                 worksheet.Cell(row, 5).Value = item.Notes;
                 worksheet.Cell(row, 6).Value = item.TransactionType;
-                worksheet.Cell(row, 7).Value = item.Supplier?.Name;
                 row++;
             }
 
@@ -128,7 +125,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             var exports = await _dbContext.WarehouseTransactions
                 .Include(t => t.Product)
-                .Include(t => t.Supplier)
                 .Where(t => t.TransactionType == "Export")
                 .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync();
@@ -194,7 +190,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
                     Text = $"{p.ProductName} (Tồn: {p.ProductQuantity})"
                 })
                 .ToList();
-            ViewBag.Suppliers = new SelectList(_dbContext.Supplier, "Id", "Name");
             ViewBag.Products = productList;
             return View();
         }
@@ -203,7 +198,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         public async Task<IActionResult> Export(WarehouseTransactionModel model)
         {
             ModelState.Remove("TransactionType");
-            ModelState.Remove("Supplier");
             ModelState.Remove("Product");
             if (ModelState.IsValid)
             {
@@ -229,7 +223,6 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
                     Text = $"{p.ProductName} (Tồn: {p.ProductQuantity})"
                 })
                 .ToList();
-            ViewBag.Suppliers = new SelectList(_dbContext.Supplier, "Id", "Name");
             ViewBag.Products = productList;
             return View(model);
         }
