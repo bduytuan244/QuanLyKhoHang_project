@@ -11,6 +11,7 @@
         <tr>
             <th>#</th>
             <th>Tên sản phẩm</th>
+            <th>Nhà cung cấp</th>
             <th>Số lượng nhập</th>
             <th>Ngày xuất</th>
             <th>Ghi chú</th>
@@ -26,6 +27,7 @@
                 <tr>
                     <td>@stt</td>
                     <td>@item.Product?.ProductName</td>
+                    <td>@item.Supplier?.Name</td>
                     <td>@item.Quantity</td>
                     <td>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>@item.Notes</td>
