@@ -27,7 +27,9 @@
                         <td>@u.Email</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-sm btn-warning">Sửa</a>
-                            <form asp-action="Delete" asp-route-id="@u.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                            
+                            <form asp-action="Delete" asp-route-id="@u.Id" method="post" style="display:inline"
+                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
@@ -37,14 +39,4 @@
 
         </tbody>
     </table>
-    @* @Html.PagedListPager(Model, page => Url.Action("Index", new {page}), new PagedListRenderOptions
-    {
-        LiElementClasses = new[] { "page-item" },
-        PageClasses = new[] { "page-link" },
-        UlElementClasses = new[] { "pagination" },
-        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-        DisplayLinkToNextPage = PagedListDisplayMode.Always,
-        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-        DisplayLinkToLastPage = PagedListDisplayMode.Always
-        }) *@
 </div>
