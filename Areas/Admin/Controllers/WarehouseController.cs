@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Nhân viên, Sales")]
     [Area("Admin")]
     public class WarehouseController : Controller
     {

@@ -7,7 +7,7 @@ using QuanLyKhoHang.Repository;
 
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class UserRoleController : Controller
     {
