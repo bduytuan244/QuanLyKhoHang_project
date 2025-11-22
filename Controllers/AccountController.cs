@@ -14,6 +14,11 @@ namespace QuanLyKhoHang.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

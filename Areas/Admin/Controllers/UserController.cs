@@ -5,7 +5,7 @@ using QuanLyKhoHang.Models.ViewModel;
 
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class UserController : Controller
     {

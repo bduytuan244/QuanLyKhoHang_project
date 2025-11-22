@@ -6,7 +6,7 @@ using QuanLyKhoHang.Repository;
 using X.PagedList.Extensions;
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Nhân viên, Sales")]
     [Area("Admin")]
     public class ProductController : Controller
     {

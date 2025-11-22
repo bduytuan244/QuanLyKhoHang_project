@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Nhân viên, Sales")]
     [Area("Admin")]
     public class Dashboard : Controller
     {

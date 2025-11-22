@@ -5,7 +5,7 @@ using QuanLyKhoHang.Repository;
 
 namespace QuanLyKhoHang.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Nhân viên")]
     [Area("Admin")]
     public class SupplierController : Controller
     {
