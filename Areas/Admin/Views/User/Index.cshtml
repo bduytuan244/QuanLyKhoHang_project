@@ -1,0 +1,79 @@
+﻿@model IEnumerable<IdentityUser>
+@{
+    ViewData["Title"] = "Danh sách người dùng";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách người dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Người dùng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-users mr-2"></i>Quản lý người dùng</h3>
+                <div class="card-tools">
+                    <a class="btn btn-success btn-sm" asp-controller="User" asp-action="Create">
+                        <i class="fas fa-plus"></i> Thêm người dùng
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">ID</th>
+                            <th>Tên người dùng</th>
+                            <th>Email</th>
+                            <th style="width: 120px;" class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var u in Model)
+                            {
+                                <tr>
+                                    <td><small class="text-muted">@u.Id.Substring(0, 8)...</small></td>
+                                    <td><strong>@u.UserName</strong></td>
+                                    <td>@u.Email</td>
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-primary btn-sm" title="Sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@u.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                            <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
+                                    <p>Chưa có người dùng nào</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

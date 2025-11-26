@@ -1,0 +1,81 @@
+﻿@model List<SupplierModel>
+@{
+    ViewData["Title"] = "Danh sách nhà cung cấp";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách nhà cung cấp</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Nhà cung cấp</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-truck mr-2"></i>Quản lý nhà cung cấp</h3>
+                <div class="card-tools">
+                    <a class="btn btn-success btn-sm" asp-controller="Supplier" asp-action="Create">
+                        <i class="fas fa-plus"></i> Thêm mới
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên nhà cung cấp</th>
+                            <th>Địa chỉ</th>
+                            <th>Điện thoại</th>
+                            <th>Email</th>
+                            <th style="width: 120px;" class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td><strong>@s.Name</strong></td>
+                                    <td>@s.Address</td>
+                                    <td>@s.Phone</td>
+                                    <td>@s.Email</td>
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-primary btn-sm" title="Sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@s.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                            <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
+                                    <p>Chưa có nhà cung cấp nào</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

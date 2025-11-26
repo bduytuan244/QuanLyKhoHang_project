@@ -1,0 +1,67 @@
+﻿@model List<UserWithRolesViewModel>
+@{
+    ViewData["Title"] = "Quản lý quyền người dùng";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý quyền người dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Gán vai trò</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-user-shield mr-2"></i>Phân quyền người dùng</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Vai trò hiện tại</th>
+                            <th style="width: 150px;" class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><strong>@item.User.Email</strong></td>
+                                <td>
+                                    @if (item.Roles.Any())
+                                    {
+                                        foreach (var role in item.Roles)
+                                        {
+                                            <span class="badge badge-primary mr-1">@role</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted"><i class="fas fa-minus-circle"></i> Chưa có vai trò</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="Manage" asp-route-userId="@item.User.Id" class="btn btn-success btn-sm" title="Gán vai trò">
+                                        <i class="fas fa-user-cog"></i> Gán vai trò
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

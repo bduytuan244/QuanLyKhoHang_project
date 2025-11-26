@@ -1,0 +1,71 @@
+﻿@model UserEditViewModel
+@{
+    ViewData["Title"] = "Sửa người dùng";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa người dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
+                    <li class="breadcrumb-item active">Sửa</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-user-edit mr-2"></i>Chỉnh sửa thông tin người dùng</h3>
+                        <div class="card-tools">
+                            <a class="btn btn-light btn-sm" asp-controller="User" asp-action="Index">
+                                <i class="fas fa-list"></i> Danh sách
+                            </a>
+                        </div>
+                    </div>
+                    <form asp-controller="User" asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div asp-validation-summary="All" class="alert alert-danger"></div>
+                            <div class="form-group">
+                                <label class="form-label">Email <small class="text-muted">(Chỉ đọc)</small></label>
+                                <input readonly asp-for="Email" type="email" class="form-control" style="background-color: #e9ecef;" />
+                                <span asp-validation-for="Email" class="text-danger" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mật khẩu mới <small class="text-muted">(Để trống nếu không đổi)</small></label>
+                                <input asp-for="NewPassword" type="password" class="form-control" placeholder="Nhập mật khẩu mới nếu muốn thay đổi" />
+                                <span asp-validation-for="NewPassword" class="text-danger" />
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-info-circle"></i> Chỉ nhập mật khẩu khi cần thay đổi
+                                </small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Cập nhật
+                            </button>
+                            <a asp-action="Index" asp-controller="User" class="btn btn-default">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
