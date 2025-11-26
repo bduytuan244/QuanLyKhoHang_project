@@ -7,7 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 //Add Identity
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<DataContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+                                                  options.SignIn.RequireConfirmedAccount = false)
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<DataContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
@@ -17,6 +20,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
+});
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 // SQL Connection
 builder.Services.AddDbContext<DataContext>(options =>
@@ -54,6 +61,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
