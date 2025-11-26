@@ -1,27 +1,72 @@
 ﻿@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register Account";
+    ViewData["Title"] = "Đăng ký";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Register</h1>
-    <form method="post" asp-controller="Account" asp-action="Register" method ="post">
-        @Html.AntiForgeryToken();
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            <span asp-validation-for="Email" class="text-danger"></span>
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <i class="fas fa-user-plus" style="font-size: 3.5rem;"></i>
+                    <h2 class="mt-3 mb-1">Đăng Ký</h2>
+                    <p class="mb-0">Tạo tài khoản mới</p>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post" asp-controller="Account" asp-action="Register">
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="font-weight-bold">
+                                <i class="fas fa-envelope text-success mr-2"></i>Email
+                            </label>
+                            <input type="email" asp-for="Email" class="form-control form-control-lg" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@email.com">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <small id="emailHelp" class="form-text text-muted">
+                                <i class="fas fa-shield-alt"></i> Thông tin của bạn được bảo mật
+                            </small>
+                        </div>
+
+                        <div class="form-group position-relative">
+                            <label for="exampleInputPassword1" class="font-weight-bold">
+                                <i class="fas fa-lock text-success mr-2"></i>Mật khẩu
+                            </label>
+                            <input type="password" asp-for="Password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="••••••••" style="padding-right: 45px;">
+                            <i class="fas fa-eye position-absolute" id="togglePassword" style="right: 15px; top: 44px; cursor: pointer; color: #28a745;"></i>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block btn-lg mt-4" style="font-weight: bold;">
+                            <i class="fas fa-user-check mr-2"></i>Đăng Ký
+                        </button>
+
+                        <div class="text-center mt-4">
+                            <small class="text-muted">
+                                Đã có tài khoản? <a asp-controller="Account" asp-action="Login" class="text-success font-weight-bold">Đăng nhập ngay</a>
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" asp-for="Password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 </div>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('exampleInputPassword1');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+    </script>
 }

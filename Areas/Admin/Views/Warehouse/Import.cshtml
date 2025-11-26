@@ -1,20 +1,22 @@
 ﻿@model WarehouseTransactionModel
 @{
-    ViewData["Title"] = "Nhập sản phẩm vào kho";
+    ViewData["Title"] = "Nhập kho";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Nhập sản phẩm vào kho</h1>
-    <a class="btn btn-primary" asp-controller="Warehouse" asp-action="ImportIndex">List</a>
-    <form asp-area="Admin" asp-action="Import" asp-controller="Warehouse" method="post">
-        @Html.AntiForgeryToken()
-        <div asp-validation-summary="All" class="text text-danger"></div>
-        <div class="mb-3">
-            <label class="form-label">Sản Phẩm</label>
-            <select asp-for="ProductId" class="form-control" asp-items="ViewBag.Products">
-                <option value="">-- Chọn Sản Phẩm --</option>
-            </select>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Phiếu nhập kho</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Nhập kho</li>
+                </ol>
+            </div>
         </div>
+<<<<<<< Updated upstream
         <div class="mb-3">
             <label class="form-label">Nhà cung cấp</label>
             <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers">
@@ -33,7 +35,89 @@
         </div>
         <button type="submit" class="btn btn-success">Lưu</button>
     </form>
+=======
+    </div>
+>>>>>>> Stashed changes
 </div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-arrow-down mr-2"></i>Thông tin nhập kho</h3>
+                        <div class="card-tools">
+                            <a class="btn btn-light btn-sm" asp-controller="Warehouse" asp-action="ImportIndex">
+                                <i class="fas fa-list"></i> Danh sách
+                            </a>
+                        </div>
+                    </div>
+                    <form asp-area="Admin" asp-action="Import" asp-controller="Warehouse" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div asp-validation-summary="All" class="alert alert-danger"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Sản phẩm <span class="text-danger">*</span></label>
+                                        <select asp-for="ProductId" class="form-control" asp-items="ViewBag.Products">
+                                            <option value="">-- Chọn sản phẩm --</option>
+                                        </select>
+                                        <span asp-validation-for="ProductId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Nhà cung cấp <span class="text-danger">*</span></label>
+                                        <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers">
+                                            <option value="">-- Chọn nhà cung cấp --</option>
+                                        </select>
+                                        <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Số lượng nhập <span class="text-danger">*</span></label>
+                                <input asp-for="Quantity" type="number" class="form-control" placeholder="Nhập số lượng" />
+                                <span asp-validation-for="Quantity" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Ghi chú</label>
+                                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Nhập ghi chú..."></textarea>
+                                <span asp-validation-for="Notes" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i> Nhập kho
+                            </button>
+                            <a asp-controller="Warehouse" asp-action="ImportIndex" class="btn btn-default">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Hướng dẫn</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Chọn sản phẩm cần nhập</li>
+                            <li><i class="fas fa-check text-success"></i> Chọn nhà cung cấp</li>
+                            <li><i class="fas fa-check text-success"></i> Nhập số lượng chính xác</li>
+                            <li><i class="fas fa-check text-success"></i> Kiểm tra lại thông tin trước khi lưu</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

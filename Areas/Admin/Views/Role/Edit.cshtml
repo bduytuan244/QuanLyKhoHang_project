@@ -1,13 +1,63 @@
 ﻿@model IdentityRole
 @{
-    ViewData["Title"] = "Edit Role";
+    ViewData["Title"] = "Sửa vai trò";
 }
-<form asp-action="Edit" asp-controller="Role" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    @Html.AntiForgeryToken()
-    <div class="mb-3">
-        <label class="form-label">Tên vai trò</label>
-        <input asp-for="Name" class="form-control" />
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa vai trò</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Role" asp-action="Index">Vai trò</a></li>
+                    <li class="breadcrumb-item active">Sửa</li>
+                </ol>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-success">Lưu</button>
-</form>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit mr-2"></i>Chỉnh sửa vai trò</h3>
+                        <div class="card-tools">
+                            <a class="btn btn-light btn-sm" asp-controller="Role" asp-action="Index">
+                                <i class="fas fa-list"></i> Danh sách
+                            </a>
+                        </div>
+                    </div>
+                    <form asp-action="Edit" asp-controller="Role" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="card-body">
+                            <div asp-validation-summary="All" class="alert alert-danger"></div>
+                            <div class="form-group">
+                                <label class="form-label">Tên vai trò <span class="text-danger">*</span></label>
+                                <input asp-for="Name" class="form-control" placeholder="Nhập tên vai trò">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Cập nhật
+                            </button>
+                            <a asp-controller="Role" asp-action="Index" class="btn btn-default">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

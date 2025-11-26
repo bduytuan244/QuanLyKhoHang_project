@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Danh sách xuất kho";
 }
+<<<<<<< Updated upstream
 <h2>Danh sách xuất kho</h2>
 <a class="btn btn-primary" asp-controller="Warehouse" asp-action="Export">Create</a>
 <a asp-action="ExportToExcel_E" asp-controller="Warehouse" class="btn btn-warning">Danh sách Excel</a>
@@ -43,5 +44,80 @@
     </tbody>
 </table>
 
+=======
+>>>>>>> Stashed changes
 
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách xuất kho</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Xuất kho</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-arrow-up mr-2"></i>Lịch sử xuất kho</h3>
+                <div class="card-tools">
+                    <a asp-action="ExportToExcel_E" asp-controller="Warehouse" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-excel"></i> Xuất Excel
+                    </a>
+                    <a class="btn btn-success btn-sm" asp-controller="Warehouse" asp-action="Export">
+                        <i class="fas fa-plus"></i> Xuất kho mới
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Tên sản phẩm</th>
+                            <th style="width: 120px;">Số lượng xuất</th>
+                            <th style="width: 150px;">Ngày xuất</th>
+                            <th>Ghi chú</th>
+                            <th style="width: 120px;">Tình trạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Any())
+                        {
+                            int stt = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td><strong>@item.Product?.ProductName</strong></td>
+                                    <td><span class="badge badge-warning" style="color: #000;">@item.Quantity</span></td>
+                                    <td><small>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</small></td>
+                                    <td>@item.Notes</td>
+                                    <td><span class="badge badge-info">@item.TransactionType</span></td>
+                                </tr>
+                                stt++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
+                                    <p>Chưa có dữ liệu xuất kho</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

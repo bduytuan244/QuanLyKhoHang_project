@@ -1,49 +1,106 @@
 ﻿@model ProductModel
 @{
-    ViewData["Title"] = "Edit Product";
+    ViewData["Title"] = "Sửa sản phẩm";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Edit Product</h1>
-    <a class="btn btn-primary" asp-controller="Product" asp-action="Index"> List Product </a>
-    <form asp-controller="Product" asp-action="Edit" method="POST">
-        @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Id" />
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Product Code</label>
-            <input type="text" asp-for="ProductCode" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa sản phẩm</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active">Sửa</li>
+                </ol>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Product Name</label>
-            <input type="text" asp-for="ProductName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Product Description</label>
-            <input type="text" asp-for="ProductDescription" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Product Quantity</label>
-            <input type="text" readonly asp-for="ProductQuantity" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Product Location</label>
-            <input type="text" asp-for="Location" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-        </div>
-        <div class="mb-3">
-            <select class="form-select" asp-for="ProductUnit" aria-label="Default select example">
-                <option value="cái">Cái</option>
-                <option value="thùng">Thùng</option>
-                <option value="bịch">Bịch</option>
-            </select>
-
-        </div>
-        <button type="submit" class="btn btn-primary">Lưu</button>
-    </form>
+    </div>
 </div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit mr-2"></i>Chỉnh sửa thông tin sản phẩm</h3>
+                        <div class="card-tools">
+                            <a class="btn btn-light btn-sm" asp-controller="Product" asp-action="Index">
+                                <i class="fas fa-list"></i> Danh sách
+                            </a>
+                        </div>
+                    </div>
+                    <form asp-controller="Product" asp-action="Edit" method="POST">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ProductCode">Mã sản phẩm</label>
+                                        <input type="text" asp-for="ProductCode" class="form-control" id="ProductCode" placeholder="Nhập mã sản phẩm">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ProductName">Tên sản phẩm</label>
+                                        <input type="text" asp-for="ProductName" class="form-control" id="ProductName" placeholder="Nhập tên sản phẩm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ProductQuantity">Số lượng <small class="text-muted">(Chỉ đọc)</small></label>
+                                        <input type="text" readonly asp-for="ProductQuantity" class="form-control" id="ProductQuantity" style="background-color: #e9ecef;">
+                                        <small class="form-text text-muted">
+                                            <i class="fas fa-info-circle"></i> Số lượng chỉ thay đổi qua nhập/xuất kho
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ProductUnit">Đơn vị tính</label>
+                                        <select class="form-control" asp-for="ProductUnit" id="ProductUnit">
+                                            <option value="">-- Chọn đơn vị --</option>
+                                            <option value="cái">Cái</option>
+                                            <option value="thùng">Thùng</option>
+                                            <option value="bịch">Bịch</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Location">Vị trí kho</label>
+                                <input type="text" asp-for="Location" class="form-control" id="Location" placeholder="Nhập vị trí trong kho">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ProductDescription">Mô tả</label>
+                                <textarea asp-for="ProductDescription" class="form-control" id="ProductDescription" rows="4" placeholder="Nhập mô tả chi tiết sản phẩm"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Cập nhật
+                            </button>
+                            <a asp-controller="Product" asp-action="Index" class="btn btn-default">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
