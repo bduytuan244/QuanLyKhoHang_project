@@ -29,11 +29,11 @@ namespace QuanLyKhoHang.Controllers
             return View();
         }
         [HttpGet]
-        public async Task <IActionResult> Logout()
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            TempData["SuccessMessage"] = "Success Logout";
-            return RedirectToAction("Login", "Account");
+            TempData["SuccessMessage"] = "Đăng xuất thành công";
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,14 +41,15 @@ namespace QuanLyKhoHang.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure:false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                TempData["SuccessMessage"] = "Success Login";
-                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                TempData["SuccessMessage"] = "Đăng nhập thành công";
+                return RedirectToAction("Index", "Home"); 
             }
 
-            return View();
+            ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không đúng");
+            return View(model);
         }
 
         [HttpGet]
@@ -60,7 +61,7 @@ namespace QuanLyKhoHang.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
             var user = new IdentityUser
             {
@@ -71,12 +72,12 @@ namespace QuanLyKhoHang.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                TempData["SuccessMessage"] = "SuccessMessage";
-                return RedirectToAction("Login", "Account");
+                TempData["SuccessMessage"] = "Đăng ký thành công! Chào mừng bạn đến với DTHLogistics";
+                return RedirectToAction("Index", "Home"); // ĐÃ SỬA: Về trang Home sau khi đăng ký
             }
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
                 ModelState.AddModelError(string.Empty, error.Description);
-            return View();
+            return View(model);
         }
     }
 }
