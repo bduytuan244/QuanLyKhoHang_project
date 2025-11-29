@@ -10,6 +10,7 @@ namespace QuanLyKhoHang.Controllers
     // 1. Đổi thành [ApiController] để báo đây là API
     [Route("api/[controller]")]
     [ApiController]
+
     public class AuthController : ControllerBase // Dùng ControllerBase cho nhẹ (thay vì Controller)
     {
         private readonly UserManager<IdentityUser> _userManager;
