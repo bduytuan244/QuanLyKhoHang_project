@@ -1,22 +1,58 @@
-html {
-  font-size: 14px;
+﻿html {
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+/* ===== Dashboard Styles - Thêm từ đây ===== */
+
+/* Chi tiết links trong các ô màu */
+.small-box .small-box-footer {
+    color: #000 !important;
+    font-weight: 700 !important;
+    background-color: rgba(0,0,0,0.15) !important;
+    text-decoration: none !important;
+}
+
+    .small-box .small-box-footer:hover {
+        color: #000 !important;
+        background-color: rgba(0,0,0,0.25) !important;
+    }
+
+/* Bảng Dashboard */
+.table thead th {
+    color: #000 !important;
+    font-weight: 700 !important;
+    background-color: #f8f9fa !important;
+}
+
+.table tbody td {
+    color: #000 !important;
+    font-weight: 600 !important;
+}
+
+    .table tbody td small {
+        color: #000 !important;
+        font-weight: 500 !important;
+    }
+
+.table .badge {
+    font-weight: 600 !important;
 }

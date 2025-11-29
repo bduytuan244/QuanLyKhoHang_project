@@ -7,13 +7,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Gán vai trò</h1>
+                <h1 style="color: #2c3e50; font-weight: 700;">Gán vai trò</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="UserRole" asp-action="Index">Gán vai trò</a></li>
-                    <li class="breadcrumb-item active">Quản lý</li>
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" style="color: #007bff;">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="UserRole" asp-action="Index" style="color: #007bff;">Gán vai trò</a></li>
+                    <li class="breadcrumb-item active" style="color: #6c757d;">Quản lý</li>
                 </ol>
             </div>
         </div>
@@ -23,13 +23,15 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-user-shield mr-2"></i>Gán vai trò cho: @Model.UserEmail</h3>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <h3 class="card-title text-white" style="font-weight: 600;">
+                            <i class="fas fa-user-shield mr-2"></i>Gán vai trò cho: @Model.UserEmail
+                        </h3>
                         <div class="card-tools">
                             <a class="btn btn-light btn-sm" asp-action="Index">
-                                <i class="fas fa-list"></i> Danh sách
+                                <i class="fas fa-list mr-1"></i> Danh sách
                             </a>
                         </div>
                     </div>
@@ -38,25 +40,27 @@
                         <input type="hidden" asp-for="UserId" />
                         <div class="card-body">
                             <div class="form-group">
-                                <label class="mb-3"><strong>Chọn vai trò:</strong></label>
+                                <label class="mb-3" style="color: #000; font-weight: 700; font-size: 16px;">
+                                    Chọn vai trò:
+                                </label>
                                 @for (int i = 0; i < Model.Roles.Count; i++)
                                 {
-                                    <div class="custom-control custom-checkbox mb-2">
+                                    <div class="custom-control custom-checkbox mb-3" style="padding: 15px; background: #fff; border: 2px solid #dee2e6; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                         <input type="checkbox" asp-for="Roles[@i].IsSelected" class="custom-control-input" id="role@(i)" />
                                         <input type="hidden" asp-for="Roles[@i].RoleName" />
-                                        <label class="custom-control-label" for="role@(i)">
-                                            <span class="badge badge-info">@Model.Roles[i].RoleName</span>
+                                        <label class="custom-control-label" for="role@(i)" style="color: #000; font-weight: 700; cursor: pointer; font-size: 16px;">
+                                            @Model.Roles[i].RoleName
                                         </label>
                                     </div>
                                 }
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Lưu thay đổi
+                        <div class="card-footer bg-white">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-save mr-2"></i> Lưu thay đổi
                             </button>
-                            <a asp-action="Index" class="btn btn-default">
-                                <i class="fas fa-times"></i> Hủy
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times mr-2"></i> Hủy
                             </a>
                         </div>
                     </form>
@@ -66,3 +70,9 @@
     </div>
 </section>
 
+<style>
+    .custom-control:hover {
+        border-color: #007bff !important;
+        box-shadow: 0 4px 8px rgba(0,123,255,0.2) !important;
+    }
+</style>

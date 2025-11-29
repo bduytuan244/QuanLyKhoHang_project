@@ -1,7 +1,209 @@
-﻿@{
+﻿@model IEnumerable<WarehouseTransactionModel>
+@{
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Dashboard</h1>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalProducts</h3>
+                        <p>Tổng sản phẩm</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="small-box-footer" style="color: #000 !important; background-color: rgba(0,0,0,0.15) !important; font-weight: 700 !important;">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalImports</h3>
+                        <p>Phiếu nhập kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Warehouse" asp-action="ImportIndex" class="small-box-footer" style="color: #000 !important; background-color: rgba(0,0,0,0.15) !important; font-weight: 700 !important;">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalExports</h3>
+                        <p>Phiếu xuất kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Warehouse" asp-action="ExportIndex" class="small-box-footer" style="color: #000 !important; background-color: rgba(0,0,0,0.15) !important; font-weight: 700 !important;">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalSuppliers</h3>
+                        <p>Nhà cung cấp</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Supplier" asp-action="Index" class="small-box-footer" style="color: #000 !important; background-color: rgba(0,0,0,0.15) !important; font-weight: 700 !important;">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7">
+                <!-- Custom tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-2"></i>
+                            Hoạt động gần đây
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead style="background-color: #f8f9fa;">
+                                        <tr>
+                                            <th style="color: #000; font-weight: 700;">Mã</th>
+                                            <th style="color: #000; font-weight: 700;">Loại</th>
+                                            <th style="color: #000; font-weight: 700;">Sản phẩm</th>
+                                            <th style="color: #000; font-weight: 700;">Số lượng</th>
+                                            <th style="color: #000; font-weight: 700;">Ngày</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null && Model.Any())
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td style="color: #000; font-weight: 600;">
+                                                        <span class="badge" style="background-color: #6c757d; color: #fff; font-weight: 700;">#@item.Id</span>
+                                                    </td>
+                                                    <td style="color: #000; font-weight: 600;">
+                                                        @if (item.TransactionType == "Import")
+                                                        {
+                                                            <span class="badge" style="background-color: #28a745; color: #fff; font-weight: 700;">Nhập</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge" style="background-color: #ffc107; color: #000; font-weight: 700;">Xuất</span>
+                                                        }
+                                                    </td>
+                                                    <td style="color: #000; font-weight: 600;">@item.Product?.ProductName</td>
+                                                    <td style="color: #000; font-weight: 700;">@item.Quantity</td>
+                                                    <td style="color: #000; font-weight: 500;">@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5" class="text-center text-muted">
+                                                    <i class="fas fa-inbox fa-2x mb-2 mt-2"></i>
+                                                    <p>Chưa có hoạt động nào</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right col -->
+            <section class="col-lg-5">
+                <!-- Quick actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bolt mr-2"></i>
+                            Thao tác nhanh
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-app bg-primary w-100">
+                                    <i class="fas fa-plus"></i> Thêm sản phẩm
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-area="Admin" asp-controller="Warehouse" asp-action="Import" class="btn btn-app bg-success w-100">
+                                    <i class="fas fa-download"></i> Nhập kho
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-area="Admin" asp-controller="Warehouse" asp-action="Export" class="btn btn-app bg-warning w-100">
+                                    <i class="fas fa-upload"></i> Xuất kho
+                                </a>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <a asp-area="Admin" asp-controller="Supplier" asp-action="Create" class="btn btn-app bg-danger w-100">
+                                    <i class="fas fa-truck"></i> Thêm NCC
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System info -->
+                <div class="card bg-gradient-success">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            Thông tin hệ thống
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-white mr-2"></i> Hệ thống hoạt động bình thường</li>
+                            <li><i class="fas fa-clock text-white mr-2"></i> Thời gian: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</li>
+                            <li><i class="fas fa-user text-white mr-2"></i> Người dùng: @User.Identity.Name</li>
+                            <li><i class="fas fa-shield-alt text-white mr-2"></i> Phiên bản: 1.0.0</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
