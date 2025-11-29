@@ -152,12 +152,13 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             ModelState.Remove("TransactionType");
             ModelState.Remove("Supplier");
-
+            ModelState.Remove("Username");
             ModelState.Remove("Product");
             if (ModelState.IsValid)
             {
                 model.TransactionType = "Import";
                 model.TransactionDate = DateTime.Now;
+                model.Username = User.Identity?.Name ?? "Không rõ";
                 _dbContext.WarehouseTransactions.Add(model);
                 var product = await _dbContext.Products.FindAsync(model.ProductId);
                 if (product != null)
@@ -199,11 +200,14 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             ModelState.Remove("TransactionType");
             ModelState.Remove("Product");
+            ModelState.Remove("Supplier");      // ← THÊM DÒNG NÀY
+            ModelState.Remove("SupplierId");    // ← THÊM DÒNG NÀY
+            ModelState.Remove("Username");
             if (ModelState.IsValid)
             {
                 model.TransactionType = "Export";
                 model.TransactionDate = DateTime.Now;
-
+                model.Username = User.Identity?.Name ?? "Không rõ";
                 _dbContext.WarehouseTransactions.Add(model);
 
                 var product = await _dbContext.Products.FindAsync(model.ProductId);
