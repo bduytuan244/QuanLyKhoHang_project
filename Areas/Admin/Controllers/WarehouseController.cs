@@ -22,13 +22,13 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
             _dbContext = dbContext;
         }
 
-    public async Task<IActionResult> ExportToExcel_I(string type="import")
+        public async Task<IActionResult> ExportToExcel_I(string type = "import")
         {
             var data = await _dbContext.WarehouseTransactions
              .Include(t => t.Product)
              .Include(t => t.Supplier) // include Supplier
              .OrderByDescending(t => t.TransactionDate)
-             .Where(t => t.TransactionType ==type)
+             .Where(t => t.TransactionType == type)
              .ToListAsync();
 
             var workbook = new XLWorkbook();
@@ -116,7 +116,7 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
                 .Include(t => t.Product)
                 .Include(t => t.Supplier)
                 .Where(t => t.TransactionType == "Import")
-                .OrderByDescending(t=> t.TransactionDate)
+                .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync();
 
             return View(imports);
@@ -199,6 +199,9 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             ModelState.Remove("TransactionType");
             ModelState.Remove("Product");
+            ModelState.Remove("Supplier");      // ← THÊM DÒNG NÀY
+            ModelState.Remove("SupplierId");    // ← THÊM DÒNG NÀY
+
             if (ModelState.IsValid)
             {
                 model.TransactionType = "Export";
