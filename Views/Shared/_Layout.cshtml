@@ -5,14 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - QuanLyKhoHang</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QuanLyKhoHang.styles.css" asp-append-version="true" />
+    <style>
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            border-bottom: 3px solid #667eea;
+        }
+
+        .navbar-brand {
+            color: #2c3e50 !important;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+            .navbar-brand:hover {
+                color: #667eea !important;
+            }
+
+        .navbar-nav .nav-link {
+            color: #2c3e50 !important;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #667eea !important;
+                background-color: rgba(102, 126, 234, 0.1);
+                border-radius: 5px;
+            }
+
+        .navbar-toggler {
+            border-color: rgba(0,0,0,0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuanLyKhoHang</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-warehouse mr-2"></i>DTHLogistics
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,31 +61,72 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home mr-1"></i>Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt mr-1"></i>Privacy
+                            </a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-primary" asp-area="" asp-controller="Account" asp-action="Logout">Logout @User.Identity.Name</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                    <i class="fas fa-tachometer-alt mr-1"></i>Dashboard
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-primary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">CMS</a>
+                                <a class="nav-link" asp-area="Admin" asp-controller="Statistics" asp-action="Index">
+                                    <i class="fas fa-chart-bar mr-1"></i>Thống kê
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                                    <i class="fas fa-box mr-1"></i>Sản phẩm
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Warehouse" asp-action="Import">
+                                    <i class="fas fa-arrow-down mr-1"></i>Nhập kho
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Warehouse" asp-action="Export">
+                                    <i class="fas fa-arrow-up mr-1"></i>Xuất kho
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Supplier" asp-action="Index">
+                                    <i class="fas fa-truck mr-1"></i>NCC
+                                </a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">
+                                    <i class="fas fa-user-plus mr-1"></i>Register
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">
+                                    <i class="fas fa-sign-in-alt mr-1"></i>Login
+                                </a>
                             </li>
                         }
-                       
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <i class="fas fa-sign-out-alt mr-1"></i>Logout (@User.Identity.Name)
+                                </a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>
@@ -53,23 +135,25 @@
         <main role="main" class="pb-3">
             @if (TempData["ErrorMessage"] != null)
             {
-                <div class="alert alert-danger">
-                    @TempData["ErrorMessage"]
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle mr-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
             else if (TempData["SuccessMessage"] != null)
             {
-                <div class="alert alert-success"> 
-                    @TempData["SuccessMessage"]
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle mr-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - QuanLyKhoHang - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted mt-5 py-3">
+        <div class="container text-center">
+            <i class="fas fa-copyright mr-1"></i> 2025 - DTHLogistics - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

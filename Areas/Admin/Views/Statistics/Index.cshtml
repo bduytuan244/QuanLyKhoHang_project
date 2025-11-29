@@ -1,0 +1,223 @@
+﻿@{
+    ViewData["Title"] = "Thống kê";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Thống kê tổng quan</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Thống kê</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Tổng quan -->
+        <div class="row mb-4">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalProducts</h3>
+                        <p>Tổng sản phẩm</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalImportQuantity</h3>
+                        <p>Tổng số lượng nhập</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalExportQuantity</h3>
+                        <p>Tổng số lượng xuất</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalStock</h3>
+                        <p>Tổng tồn kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Top sản phẩm nhập -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-success">
+                        <h3 class="card-title text-white">
+                            <i class="fas fa-arrow-down mr-2"></i>Top 5 sản phẩm nhập nhiều nhất
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="color: #000; font-weight: 700;">STT</th>
+                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
+                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
+                                    <th style="color: #000; font-weight: 700;">Lần nhập</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int stt = 1;
+                                    foreach (var item in ViewBag.TopImports)
+                                    {
+                                        <tr>
+                                            <td style="color: #000; font-weight: 600;">@stt</td>
+                                            <td style="color: #000; font-weight: 600;">@item.ProductName</td>
+                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
+                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                        </tr>
+                                        stt++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top sản phẩm xuất -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-warning">
+                        <h3 class="card-title" style="color: #000;">
+                            <i class="fas fa-arrow-up mr-2"></i>Top 5 sản phẩm xuất nhiều nhất
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="color: #000; font-weight: 700;">STT</th>
+                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
+                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
+                                    <th style="color: #000; font-weight: 700;">Lần xuất</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int stt2 = 1;
+                                    foreach (var item in ViewBag.TopExports)
+                                    {
+                                        <tr>
+                                            <td style="color: #000; font-weight: 600;">@stt2</td>
+                                            <td style="color: #000; font-weight: 600;">@item.ProductName</td>
+                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
+                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                        </tr>
+                                        stt2++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Top NCC -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-danger">
+                        <h3 class="card-title text-white">
+                            <i class="fas fa-truck mr-2"></i>Top 5 nhà cung cấp
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="color: #000; font-weight: 700;">STT</th>
+                                    <th style="color: #000; font-weight: 700;">Nhà cung cấp</th>
+                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
+                                    <th style="color: #000; font-weight: 700;">Giao dịch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int stt3 = 1;
+                                    foreach (var item in ViewBag.TopSuppliers)
+                                    {
+                                        <tr>
+                                            <td style="color: #000; font-weight: 600;">@stt3</td>
+                                            <td style="color: #000; font-weight: 600;">@item.SupplierName</td>
+                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
+                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                        </tr>
+                                        stt3++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm sắp hết -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-danger">
+                        <h3 class="card-title text-white">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Sản phẩm sắp hết hàng
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
+                                    <th style="color: #000; font-weight: 700;">Tồn kho</th>
+                                    <th style="color: #000; font-weight: 700;">Vị trí</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.LowStock)
+                                {
+                                    <tr>
+                                        <td style="color: #000; font-weight: 600;">@item.ProductName</td>
+                                        <td style="color: #000; font-weight: 700;">
+                                            <span class="badge badge-danger">@item.ProductQuantity</span>
+                                        </td>
+                                        <td style="color: #000; font-weight: 600;">@item.Location</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
