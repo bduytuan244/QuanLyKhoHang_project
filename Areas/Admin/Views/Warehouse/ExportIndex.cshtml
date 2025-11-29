@@ -2,50 +2,6 @@
 @{
     ViewData["Title"] = "Danh sách xuất kho";
 }
-<<<<<<< Updated upstream
-<h2>Danh sách xuất kho</h2>
-<a class="btn btn-primary" asp-controller="Warehouse" asp-action="Export">Create</a>
-<a asp-action="ExportToExcel_E" asp-controller="Warehouse" class="btn btn-warning">Danh sách Excel</a>
-
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Tên sản phẩm</th>
-            <th>Số lượng nhập</th>
-            <th>Ngày xuất</th>
-            <th>Ghi chú</th>
-            <th>Tình trạng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Any())
-        {
-            int stt = 1;
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@stt</td>
-                    <td>@item.Product?.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@item.Notes</td>
-                    <td>@item.TransactionType</td>
-                </tr>
-                stt++;
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5" class="text-center">Không có dữ liệu.</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-=======
->>>>>>> Stashed changes
 
 <div class="content-header">
     <div class="container-fluid">
@@ -83,6 +39,8 @@
                         <tr>
                             <th style="width: 50px;">#</th>
                             <th>Tên sản phẩm</th>
+                            <th>Người thực hiện</th>
+
                             <th style="width: 120px;">Số lượng xuất</th>
                             <th style="width: 150px;">Ngày xuất</th>
                             <th>Ghi chú</th>
@@ -98,6 +56,9 @@
                                 <tr>
                                     <td>@stt</td>
                                     <td><strong>@item.Product?.ProductName</strong></td>
+                                    <td>
+                                        <span class="badge badge-secondary">@item.Username</span>
+                                    </td>
                                     <td><span class="badge badge-warning" style="color: #000;">@item.Quantity</span></td>
                                     <td><small>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</small></td>
                                     <td>@item.Notes</td>

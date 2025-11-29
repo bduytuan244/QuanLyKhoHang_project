@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyKhoHang.Models
 {
     public class ProductModel
     {
         public int Id { get; set; }
+
         [Required(ErrorMessage = "Vui long nhap ma san pham")]
         [StringLength(100)]
         public string ProductCode { get; set; }
@@ -27,12 +29,9 @@ namespace QuanLyKhoHang.Models
         [Required]
         public string Location { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime CreateDate { get; set; }
+        // SỬA: Thêm dấu ? để cho phép Null (Tránh lỗi parse ngày tháng từ Android)
+        public DateTime? CreateDate { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime UpdateDate { get; set; }
-
-
+        public DateTime? UpdateDate { get; set; }
     }
 }
