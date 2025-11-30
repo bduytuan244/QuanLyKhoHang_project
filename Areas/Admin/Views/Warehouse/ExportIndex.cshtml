@@ -57,12 +57,12 @@
                                     <td>@stt</td>
                                     <td><strong>@item.Product?.ProductName</strong></td>
                                     <td>
-                                        <span class="badge badge-secondary">@item.Username</span>
+                                        <span class="badge badge-secondary" style="background-color: #dc00Ff ;color: #000;">@item.Username</span>
                                     </td>
                                     <td><span class="badge badge-warning" style="color: #000;">@item.Quantity</span></td>
                                     <td><small>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</small></td>
                                     <td>@item.Notes</td>
-                                    <td><span class="badge badge-info">@item.TransactionType</span></td>
+                                    <td><span class="badge badge-info" style="color: #000;">@item.TransactionType</span></td>
                                 </tr>
                                 stt++;
                             }
