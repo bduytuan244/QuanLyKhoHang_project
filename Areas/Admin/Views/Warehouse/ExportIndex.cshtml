@@ -3,48 +3,215 @@
     ViewData["Title"] = "Danh sách xuất kho";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Danh sách xuất kho</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item active">Xuất kho</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: #000;
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+    }
+
+        .page-header h1 {
+            color: #000;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(0,0,0,0.7);
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #ff9800;
+    }
+
+        .table-header h3 {
+            color: #000;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-excel {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        margin-right: 10px;
+    }
+
+        .btn-excel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+    .btn-add-export {
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+    }
+
+        .btn-add-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+            color: white;
+        }
+
+    .table-custom {
+        margin: 0;
+    }
+
+        .table-custom thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+            .table-custom thead th {
+                color: white;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 15px 12px;
+                border: none;
+                vertical-align: middle;
+            }
+
+        .table-custom tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+                transform: scale(1.01);
+            }
+
+        .table-custom tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .badge-custom {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+    .badge-qty {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #000;
+    }
+
+    .badge-user {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .badge-type {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .product-name {
+        color: #1e3c72;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+        .empty-state i {
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-arrow-up mr-2"></i>Danh Sách Xuất Kho</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Xuất kho</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-arrow-up mr-2"></i>Lịch sử xuất kho</h3>
-                <div class="card-tools">
-                    <a asp-action="ExportToExcel_E" asp-controller="Warehouse" class="btn btn-warning btn-sm">
-                        <i class="fas fa-file-excel"></i> Xuất Excel
-                    </a>
-                    <a class="btn btn-success btn-sm" asp-controller="Warehouse" asp-action="Export">
-                        <i class="fas fa-plus"></i> Xuất kho mới
-                    </a>
+        <div class="table-card">
+            <div class="table-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3><i class="fas fa-history mr-2"></i>Lịch sử xuất kho</h3>
+                    <div>
+                        <a asp-action="ExportToExcel_E" asp-controller="Warehouse" class="btn btn-excel">
+                            <i class="fas fa-file-excel mr-2"></i>Xuất Excel
+                        </a>
+                        <a class="btn btn-add-export" asp-controller="Warehouse" asp-action="Export">
+                            <i class="fas fa-plus mr-2"></i>Xuất kho mới
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover table-striped">
+            <div class="table-responsive">
+                <table class="table table-custom">
                     <thead>
                         <tr>
-                            <th style="width: 50px;">#</th>
+                            <th style="width: 60px;">STT</th>
                             <th>Tên sản phẩm</th>
-                            <th>Người thực hiện</th>
-
-                            <th style="width: 120px;">Số lượng xuất</th>
+                            <th style="width: 150px;">Người thực hiện</th>
+                            <th style="width: 120px;">Số lượng</th>
                             <th style="width: 150px;">Ngày xuất</th>
                             <th>Ghi chú</th>
-                            <th style="width: 120px;">Tình trạng</th>
+                            <th style="width: 120px;">Loại GD</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,15 +221,42 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@stt</td>
-                                    <td><strong>@item.Product?.ProductName</strong></td>
-                                    <td>
-                                        <span class="badge badge-secondary" style="background-color: #dc00Ff ;color: #000;">@item.Username</span>
+                                    <td><strong>#@stt</strong></td>
+                                    <td class="product-name">
+                                        <i class="fas fa-box mr-2" style="color: #ffc107;"></i>@item.Product?.ProductName
                                     </td>
-                                    <td><span class="badge badge-warning" style="color: #000;">@item.Quantity</span></td>
-                                    <td><small>@item.TransactionDate.ToString("dd/MM/yyyy HH:mm")</small></td>
-                                    <td>@item.Notes</td>
-                                    <td><span class="badge badge-info" style="color: #000;">@item.TransactionType</span></td>
+                                    <td>
+                                        <span class="badge badge-custom badge-user">
+                                            <i class="fas fa-user mr-1"></i>@item.Username
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-custom badge-qty">
+                                            <i class="fas fa-arrow-up mr-1"></i>@item.Quantity
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            <i class="far fa-calendar-alt mr-1"></i>@item.TransactionDate.ToString("dd/MM/yyyy")
+                                            <br>
+                                            <i class="far fa-clock mr-1"></i>@item.TransactionDate.ToString("HH:mm")
+                                        </small>
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Notes))
+                                        {
+                                            <small>@(item.Notes.Length > 50 ? item.Notes.Substring(0, 50) + "..." : item.Notes)</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="text-muted">---</small>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-custom badge-type">
+                                            <i class="fas fa-exchange-alt mr-1"></i>@item.TransactionType
+                                        </span>
+                                    </td>
                                 </tr>
                                 stt++;
                             }
@@ -70,9 +264,11 @@
                         else
                         {
                             <tr>
-                                <td colspan="6" class="text-center text-muted">
-                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
-                                    <p>Chưa có dữ liệu xuất kho</p>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <i class="fas fa-box-open fa-4x"></i>
+                                        <p>Chưa có dữ liệu xuất kho</p>
+                                    </div>
                                 </td>
                             </tr>
                         }

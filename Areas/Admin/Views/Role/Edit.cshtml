@@ -3,52 +3,247 @@
     ViewData["Title"] = "Sửa vai trò";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Sửa vai trò</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="Role" asp-action="Index">Vai trò</a></li>
-                    <li class="breadcrumb-item active">Sửa</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #764ba2;
+    }
+
+        .form-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-list {
+        background: rgba(255,255,255,0.9);
+        color: #667eea;
+        border: none;
+        padding: 8px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-list:hover {
+            background: white;
+            color: #764ba2;
+            transform: translateY(-2px);
+        }
+
+    .form-label-custom {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            outline: none;
+        }
+
+    .form-section {
+        padding: 30px;
+    }
+
+    .form-footer {
+        background: #f8f9fa;
+        padding: 20px 30px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+    .btn-cancel {
+        background: white;
+        border: 2px solid #e0e0e0;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: #5a6c7d;
+        transition: all 0.3s ease;
+    }
+
+        .btn-cancel:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+    .required-star {
+        color: #e74c3c;
+        font-weight: 700;
+    }
+
+    .form-hint {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fff8e1 100%);
+        border-left: 4px solid #ffc107;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+        .warning-box i {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .warning-box p {
+            margin: 10px 0 0 0;
+            color: #856404;
+        }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-edit mr-2"></i>Sửa Vai Trò</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <a asp-controller="Role" asp-action="Index">Vai trò</a>
+            <span class="mx-2">/</span>
+            <span class="active">Chỉnh sửa</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-edit mr-2"></i>Chỉnh sửa vai trò</h3>
-                        <div class="card-tools">
-                            <a class="btn btn-light btn-sm" asp-controller="Role" asp-action="Index">
-                                <i class="fas fa-list"></i> Danh sách
+            <div class="col-lg-6 offset-lg-3">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3><i class="fas fa-user-cog mr-2"></i>Chỉnh sửa vai trò</h3>
+                            <a class="btn btn-list" asp-controller="Role" asp-action="Index">
+                                <i class="fas fa-list mr-1"></i>Danh sách
                             </a>
                         </div>
                     </div>
+
                     <form asp-action="Edit" asp-controller="Role" method="post">
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-section">
                             <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                            <!-- Warning Box -->
+                            <div class="warning-box">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Lưu ý quan trọng:</strong>
+                                <p>Thay đổi tên vai trò có thể ảnh hưởng đến quyền truy cập của người dùng. Vui lòng cân nhắc kỹ trước khi cập nhật!</p>
+                            </div>
+
                             <div class="form-group">
-                                <label class="form-label">Tên vai trò <span class="text-danger">*</span></label>
-                                <input asp-for="Name" class="form-control" placeholder="Nhập tên vai trò">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-tag mr-2" style="color: #667eea;"></i>Tên vai trò
+                                    <span class="required-star">*</span>
+                                </label>
+                                <input asp-for="Name"
+                                       class="form-control form-control-custom"
+                                       placeholder="VD: Admin, Manager, Staff" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Tên vai trò phải duy nhất và rõ ràng
+                                </small>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Cập nhật
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-update">
+                                <i class="fas fa-sync-alt mr-2"></i>Cập Nhật
                             </button>
-                            <a asp-controller="Role" asp-action="Index" class="btn btn-default">
-                                <i class="fas fa-times"></i> Hủy
+                            <a asp-controller="Role" asp-action="Index" class="btn btn-cancel ml-2">
+                                <i class="fas fa-times mr-2"></i>Hủy Bỏ
                             </a>
                         </div>
                     </form>

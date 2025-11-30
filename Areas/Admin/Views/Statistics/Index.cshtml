@@ -2,103 +2,335 @@
     ViewData["Title"] = "Thống kê";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0" style="color: #2c3e50; font-weight: 700;">Thống kê tổng quan</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" style="color: #007bff;">Home</a></li>
-                    <li class="breadcrumb-item active" style="color: #6c757d;">Thống kê</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+            .stat-card:hover::before {
+                width: 100%;
+                opacity: 0.1;
+            }
+
+        .stat-card.info::before {
+            background: #17a2b8;
+        }
+
+        .stat-card.success::before {
+            background: #28a745;
+        }
+
+        .stat-card.warning::before {
+            background: #ffc107;
+        }
+
+        .stat-card.primary::before {
+            background: #667eea;
+        }
+
+    .stat-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .stat-card.info .stat-icon {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    }
+
+    .stat-card.success .stat-icon {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    }
+
+    .stat-card.warning .stat-icon {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    }
+
+    .stat-card.primary .stat-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e3c72;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: #7f8c8d;
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+
+    .data-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .data-header {
+        padding: 20px 25px;
+        border-bottom: 3px solid;
+    }
+
+        .data-header.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-bottom-color: #20c997;
+        }
+
+        .data-header.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            border-bottom-color: #ff9800;
+        }
+
+        .data-header.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            border-bottom-color: #c82333;
+        }
+
+        .data-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .data-header.warning h3 {
+            color: #000;
+        }
+
+    .table-custom {
+        margin: 0;
+    }
+
+        .table-custom thead {
+            background: #f8f9fa;
+        }
+
+            .table-custom thead th {
+                color: #1e3c72;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 15px 12px;
+                border: none;
+            }
+
+        .table-custom tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background: #f8f9fa;
+            }
+
+        .table-custom tbody td {
+            padding: 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .badge-qty {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+    .badge-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+    .rank-badge {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .rank-1 {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #000;
+    }
+
+    .rank-2 {
+        background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+        color: #000;
+    }
+
+    .rank-3 {
+        background: linear-gradient(135deg, #cd7f32 0%, #d4975b 100%);
+        color: #fff;
+    }
+
+    .rank-other {
+        background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%);
+        color: #5a6c7d;
+    }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-chart-bar mr-2"></i>Thống Kê Tổng Quan</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Thống kê</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <!-- Tổng quan -->
-        <div class="row mb-4">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>@ViewBag.TotalProducts</h3>
-                        <p>Tổng sản phẩm</p>
-                    </div>
-                    <div class="icon">
+        <!-- Summary Stats -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card info">
+                    <div class="stat-icon">
                         <i class="fas fa-box"></i>
                     </div>
+                    <div class="stat-number">@ViewBag.TotalProducts</div>
+                    <div class="stat-label">Tổng sản phẩm</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>@ViewBag.TotalImportQuantity</h3>
-                        <p>Tổng số lượng nhập</p>
-                    </div>
-                    <div class="icon">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card success">
+                    <div class="stat-icon">
                         <i class="fas fa-arrow-down"></i>
                     </div>
+                    <div class="stat-number">@ViewBag.TotalImportQuantity</div>
+                    <div class="stat-label">Tổng số lượng nhập</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>@ViewBag.TotalExportQuantity</h3>
-                        <p>Tổng số lượng xuất</p>
-                    </div>
-                    <div class="icon">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card warning">
+                    <div class="stat-icon">
                         <i class="fas fa-arrow-up"></i>
                     </div>
+                    <div class="stat-number">@ViewBag.TotalExportQuantity</div>
+                    <div class="stat-label">Tổng số lượng xuất</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-primary">
-                    <div class="inner">
-                        <h3>@ViewBag.TotalStock</h3>
-                        <p>Tổng tồn kho</p>
-                    </div>
-                    <div class="icon">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
                         <i class="fas fa-warehouse"></i>
                     </div>
+                    <div class="stat-number">@ViewBag.TotalStock</div>
+                    <div class="stat-label">Tổng tồn kho</div>
                 </div>
             </div>
         </div>
 
+        <!-- Top Products -->
         <div class="row">
-            <!-- Top sản phẩm nhập -->
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-success">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-arrow-down mr-2"></i>Top 5 sản phẩm nhập nhiều nhất
-                        </h3>
+                <div class="data-card">
+                    <div class="data-header success">
+                        <h3><i class="fas fa-arrow-down mr-2"></i>Top 5 Sản Phẩm Nhập Nhiều Nhất</h3>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th style="color: #000; font-weight: 700;">STT</th>
-                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
-                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
-                                    <th style="color: #000; font-weight: 700;">Lần nhập</th>
+                                    <th style="width: 60px;">Hạng</th>
+                                    <th>Sản phẩm</th>
+                                    <th style="width: 100px;">Số lượng</th>
+                                    <th style="width: 100px;">Lần nhập</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
-                                    int stt = 1;
+                                    int rank = 1;
                                     foreach (var item in ViewBag.TopImports)
                                     {
+                                        var rankClass = rank == 1 ? "rank-1" : rank == 2 ? "rank-2" : rank == 3 ? "rank-3" : "rank-other";
                                         <tr>
-                                            <td style="color: #000; font-weight: 600;">@stt</td>
-                                            <td style="color: #000; font-weight: 600;">@item.ProductName</td>
-                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
-                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                            <td>
+                                                <span class="rank-badge @rankClass">@rank</span>
+                                            </td>
+                                            <td><strong>@item.ProductName</strong></td>
+                                            <td><strong style="color: #28a745;">@item.TotalQuantity</strong></td>
+                                            <td>@item.Count</td>
                                         </tr>
-                                        stt++;
+                                        rank++;
                                     }
                                 }
                             </tbody>
@@ -107,36 +339,36 @@
                 </div>
             </div>
 
-            <!-- Top sản phẩm xuất -->
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-warning">
-                        <h3 class="card-title" style="color: #000; font-weight: 600;">
-                            <i class="fas fa-arrow-up mr-2"></i>Top 5 sản phẩm xuất nhiều nhất
-                        </h3>
+                <div class="data-card">
+                    <div class="data-header warning">
+                        <h3><i class="fas fa-arrow-up mr-2"></i>Top 5 Sản Phẩm Xuất Nhiều Nhất</h3>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th style="color: #000; font-weight: 700;">STT</th>
-                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
-                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
-                                    <th style="color: #000; font-weight: 700;">Lần xuất</th>
+                                    <th style="width: 60px;">Hạng</th>
+                                    <th>Sản phẩm</th>
+                                    <th style="width: 100px;">Số lượng</th>
+                                    <th style="width: 100px;">Lần xuất</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
-                                    int stt2 = 1;
+                                    int rank2 = 1;
                                     foreach (var item in ViewBag.TopExports)
                                     {
+                                        var rankClass2 = rank2 == 1 ? "rank-1" : rank2 == 2 ? "rank-2" : rank2 == 3 ? "rank-3" : "rank-other";
                                         <tr>
-                                            <td style="color: #000; font-weight: 600;">@stt2</td>
-                                            <td style="color: #000; font-weight: 600;">@item.ProductName</td>
-                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
-                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                            <td>
+                                                <span class="rank-badge @rankClass2">@rank2</span>
+                                            </td>
+                                            <td><strong>@item.ProductName</strong></td>
+                                            <td><strong style="color: #ffc107;">@item.TotalQuantity</strong></td>
+                                            <td>@item.Count</td>
                                         </tr>
-                                        stt2++;
+                                        rank2++;
                                     }
                                 }
                             </tbody>
@@ -146,37 +378,38 @@
             </div>
         </div>
 
-        <div class="row mt-4">
-            <!-- Top NCC -->
+        <!-- Suppliers & Low Stock -->
+        <div class="row">
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-danger">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-truck mr-2"></i>Top 5 nhà cung cấp
-                        </h3>
+                <div class="data-card">
+                    <div class="data-header danger">
+                        <h3><i class="fas fa-truck mr-2"></i>Top 5 Nhà Cung Cấp</h3>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th style="color: #000; font-weight: 700;">STT</th>
-                                    <th style="color: #000; font-weight: 700;">Nhà cung cấp</th>
-                                    <th style="color: #000; font-weight: 700;">Số lượng</th>
-                                    <th style="color: #000; font-weight: 700;">Giao dịch</th>
+                                    <th style="width: 60px;">Hạng</th>
+                                    <th>Nhà cung cấp</th>
+                                    <th style="width: 100px;">Số lượng</th>
+                                    <th style="width: 100px;">Giao dịch</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
-                                    int stt3 = 1;
+                                    int rank3 = 1;
                                     foreach (var item in ViewBag.TopSuppliers)
                                     {
+                                        var rankClass3 = rank3 == 1 ? "rank-1" : rank3 == 2 ? "rank-2" : rank3 == 3 ? "rank-3" : "rank-other";
                                         <tr>
-                                            <td style="color: #000; font-weight: 600;">@stt3</td>
-                                            <td style="color: #000; font-weight: 600;">@item.SupplierName</td>
-                                            <td style="color: #000; font-weight: 700;">@item.TotalQuantity</td>
-                                            <td style="color: #000; font-weight: 600;">@item.Count</td>
+                                            <td>
+                                                <span class="rank-badge @rankClass3">@rank3</span>
+                                            </td>
+                                            <td><strong>@item.SupplierName</strong></td>
+                                            <td><strong style="color: #dc3545;">@item.TotalQuantity</strong></td>
+                                            <td>@item.Count</td>
                                         </tr>
-                                        stt3++;
+                                        rank3++;
                                     }
                                 }
                             </tbody>
@@ -185,32 +418,36 @@
                 </div>
             </div>
 
-            <!-- Sản phẩm sắp hết -->
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header bg-danger">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>Sản phẩm sắp hết hàng
-                        </h3>
+                <div class="data-card">
+                    <div class="data-header danger">
+                        <h3><i class="fas fa-exclamation-triangle mr-2"></i>Sản Phẩm Sắp Hết Hàng</h3>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
+                    <div class="table-responsive">
+                        <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th style="color: #000; font-weight: 700;">Sản phẩm</th>
-                                    <th style="color: #000; font-weight: 700;">Tồn kho</th>
-                                    <th style="color: #000; font-weight: 700;">Vị trí</th>
+                                    <th>Sản phẩm</th>
+                                    <th style="width: 100px;">Tồn kho</th>
+                                    <th style="width: 150px;">Vị trí</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in ViewBag.LowStock)
                                 {
                                     <tr>
-                                        <td style="color: #000; font-weight: 600; font-size: 14px;">@item.ProductName</td>
-                                        <td style="color: #000; font-weight: 700;">
-                                            <span class="badge" style="background-color: #dc3545; color: #000; font-size: 14px; padding: 6px 12px; font-weight: 700;">@item.ProductQuantity</span>
+                                        <td>
+                                            <i class="fas fa-box mr-2" style="color: #dc3545;"></i>
+                                            <strong>@item.ProductName</strong>
                                         </td>
-                                        <td style="color: #000; font-weight: 600; font-size: 14px;">@item.Location</td>
+                                        <td>
+                                            <span class="badge badge-qty badge-danger">
+                                                <i class="fas fa-exclamation-circle mr-1"></i>@item.ProductQuantity
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <i class="fas fa-map-marker-alt mr-1" style="color: #7f8c8d;"></i>@item.Location
+                                        </td>
                                     </tr>
                                 }
                             </tbody>

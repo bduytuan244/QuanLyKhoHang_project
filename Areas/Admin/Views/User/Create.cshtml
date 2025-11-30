@@ -3,57 +3,271 @@
     ViewData["Title"] = "Thêm người dùng";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Thêm người dùng</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
-                    <li class="breadcrumb-item active">Thêm mới</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #20c997;
+    }
+
+        .form-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-list {
+        background: rgba(255,255,255,0.9);
+        color: #28a745;
+        border: none;
+        padding: 8px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-list:hover {
+            background: white;
+            color: #20c997;
+            transform: translateY(-2px);
+        }
+
+    .form-label-custom {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            outline: none;
+        }
+
+    .form-section {
+        padding: 30px;
+    }
+
+    .form-footer {
+        background: #f8f9fa;
+        padding: 20px 30px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+    .btn-cancel {
+        background: white;
+        border: 2px solid #e0e0e0;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: #5a6c7d;
+        transition: all 0.3s ease;
+    }
+
+        .btn-cancel:hover {
+            background: #f8f9fa;
+            border-color: #28a745;
+            color: #28a745;
+            transform: translateY(-2px);
+        }
+
+    .form-hint {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .required-star {
+        color: #e74c3c;
+        font-weight: 700;
+    }
+
+    .security-info {
+        background: linear-gradient(135d, #e8f5e9 0%, #c8e6c9 100%);
+        border-left: 4px solid #28a745;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+        .security-info i {
+            color: #28a745;
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+
+        .security-info h5 {
+            color: #1b5e20;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .security-info ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #2e7d32;
+        }
+
+            .security-info ul li {
+                margin: 5px 0;
+            }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-user-plus mr-2"></i>Thêm Người Dùng</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <a asp-controller="User" asp-action="Index">Người dùng</a>
+            <span class="mx-2">/</span>
+            <span class="active">Thêm mới</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-user-plus mr-2"></i>Thông tin người dùng</h3>
-                        <div class="card-tools">
-                            <a class="btn btn-light btn-sm" asp-controller="User" asp-action="Index">
-                                <i class="fas fa-list"></i> Danh sách
+            <div class="col-lg-6 offset-lg-3">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3><i class="fas fa-user-circle mr-2"></i>Thông tin người dùng</h3>
+                            <a class="btn btn-list" asp-controller="User" asp-action="Index">
+                                <i class="fas fa-list mr-1"></i>Danh sách
                             </a>
                         </div>
                     </div>
+
                     <form asp-controller="User" asp-action="Create" method="post">
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
+                        <div class="form-section">
                             <div asp-validation-summary="All" class="alert alert-danger"></div>
-                            <div class="form-group">
-                                <label class="form-label">Email <span class="text-danger">*</span></label>
-                                <input asp-for="Email" type="email" class="form-control" placeholder="Nhập địa chỉ email" />
-                                <span asp-validation-for="Email" class="text-danger" />
+
+                            <!-- Security Info -->
+                            <div class="security-info">
+                                <h5><i class="fas fa-shield-alt"></i>Yêu cầu bảo mật</h5>
+                                <ul>
+                                    <li>Email phải hợp lệ và duy nhất</li>
+                                    <li>Mật khẩu tối thiểu 6 ký tự</li>
+                                    <li>Nên có chữ hoa, chữ thường và số</li>
+                                </ul>
                             </div>
+
                             <div class="form-group">
-                                <label class="form-label">Mật khẩu <span class="text-danger">*</span></label>
-                                <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
-                                <span asp-validation-for="Password" class="text-danger" />
+                                <label class="form-label-custom">
+                                    <i class="fas fa-envelope mr-2" style="color: #28a745;"></i>Email
+                                    <span class="required-star">*</span>
+                                </label>
+                                <input asp-for="Email"
+                                       type="email"
+                                       class="form-control form-control-custom"
+                                       placeholder="example@dthlogistics.com" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Email sẽ được dùng để đăng nhập
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label-custom">
+                                    <i class="fas fa-key mr-2" style="color: #28a745;"></i>Mật khẩu
+                                    <span class="required-star">*</span>
+                                </label>
+                                <input asp-for="Password"
+                                       type="password"
+                                       class="form-control form-control-custom"
+                                       placeholder="••••••••" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-lock"></i> Tối thiểu 6 ký tự, nên kết hợp chữ và số
+                                </small>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Lưu
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-save">
+                                <i class="fas fa-check-circle mr-2"></i>Tạo Người Dùng
                             </button>
-                            <a asp-action="Index" asp-controller="User" class="btn btn-default">
-                                <i class="fas fa-times"></i> Hủy
+                            <a asp-action="Index" asp-controller="User" class="btn btn-cancel ml-2">
+                                <i class="fas fa-times mr-2"></i>Hủy Bỏ
                             </a>
                         </div>
                     </form>

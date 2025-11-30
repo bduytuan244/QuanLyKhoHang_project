@@ -11,66 +11,96 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">QuanLyKhoHang</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark main-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand brand-logo" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-warehouse me-2"></i>QuanLyKhoHang
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fas fa-bars text-white"></i></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1 align-items-sm-center">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-main" asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-main" asp-area="" asp-controller="Home" asp-action="Privacy">
+                            <i class="fas fa-shield-alt me-1"></i>Privacy
+                        </a>
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                <i class="fas fa-tachometer-alt me-1"></i>CMS
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                                <i class="fab fa-product-hunt me-1"></i>Sản phẩm
+                            </a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-primary" asp-area="" asp-controller="Account" asp-action="Logout">Logout @User.Identity.Name</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-primary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">CMS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="fab fa-product-hunt"></i>Sản phẩm</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Warehouse" asp-action="Import"><i class="fas fa-warehouse"></i>Nhập kho</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Warehouse" asp-action="Export"><i class="fas fa-warehouse"></i>Xuất kho</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Supplier" asp-action="Index"><i class="fas fa-warehouse"></i>Nhà cung cấp</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="User" asp-action="Index"><i class="fas fa-user"></i>Users</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="Role" asp-action="Index"><i class="fas fa-user"></i>Roles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-area="Admin" asp-controller="UserRole" asp-action="Index"><i class="fas fa-user"></i>Gán vai trò</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        }
-                       
-                    </ul>
-                </div>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Warehouse" asp-action="Import">
+                                <i class="fas fa-boxes-stacked me-1"></i>Nhập kho
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Warehouse" asp-action="Export">
+                                <i class="fas fa-dolly me-1"></i>Xuất kho
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Supplier" asp-action="Index">
+                                <i class="fas fa-truck me-1"></i>Nhà cung cấp
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="User" asp-action="Index">
+                                <i class="fas fa-user me-1"></i>Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="Role" asp-action="Index">
+                                <i class="fas fa-user-tag me-1"></i>Roles
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="Admin" asp-controller="UserRole" asp-action="Index">
+                                <i class="fas fa-user-shield me-1"></i>Gán vai trò
+                            </a>
+                        </li>
+
+                        <li class="nav-item ms-sm-3 mt-2 mt-sm-0">
+                            <a class="nav-link user-pill" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <i class="fas fa-right-from-brush me-1"></i>Logout @User.Identity.Name
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item ms-sm-auto">
+                            <a class="nav-link nav-link-main" asp-area="" asp-controller="Account" asp-action="Register">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-main" asp-area="" asp-controller="Account" asp-action="Login">
+                                <i class="fas fa-right-to-bracket me-1"></i>Login
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @if (TempData["ErrorMessage"] != null)

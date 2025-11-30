@@ -4,47 +4,270 @@
     ViewData["Title"] = "Danh sách sản phẩm";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Danh sách sản phẩm</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item active">Sản phẩm</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #667eea;
+    }
+
+        .table-header h3 {
+            color: #1e3c72;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-add-new {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-add-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+    .table-custom {
+        margin: 0;
+    }
+
+        .table-custom thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+            .table-custom thead th {
+                color: white;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 15px 12px;
+                border: none;
+                vertical-align: middle;
+            }
+
+        .table-custom tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                transform: scale(1.01);
+            }
+
+        .table-custom tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .badge-custom {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 6px;
+    }
+
+    .badge-code {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+    }
+
+    .badge-qty-high {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        color: white;
+    }
+
+    .badge-qty-medium {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #000;
+    }
+
+    .badge-qty-low {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+    .table-footer {
+        background: #f8f9fa;
+        padding: 20px 25px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .pagination-info {
+        color: #5a6c7d;
+        font-weight: 500;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    .pagination {
+        margin: 0;
+    }
+
+    .page-link {
+        border: 2px solid #e0e0e0;
+        color: #667eea;
+        font-weight: 600;
+        padding: 8px 15px;
+        margin: 0 3px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .page-link:hover {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: #667eea;
+        color: white;
+    }
+
+    .product-name {
+        color: #1e3c72;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+        .empty-state i {
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-boxes mr-2"></i>Danh Sách Sản Phẩm</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Sản phẩm</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-box mr-2"></i>Quản lý sản phẩm</h3>
-                <div class="card-tools">
-                    <a class="btn btn-success btn-sm" asp-controller="Product" asp-action="Create">
-                        <i class="fas fa-plus"></i> Thêm mới
+        <div class="table-card">
+            <div class="table-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3><i class="fas fa-box mr-2"></i>Quản lý sản phẩm</h3>
+                    <a class="btn btn-add-new" asp-controller="Product" asp-action="Create">
+                        <i class="fas fa-plus mr-2"></i>Thêm mới
                     </a>
                 </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover table-striped">
+            <div class="table-responsive">
+                <table class="table table-custom">
                     <thead>
                         <tr>
-                            <th style="width: 50px;">ID</th>
-                            <th>Mã SP</th>
+                            <th style="width: 60px;">ID</th>
+                            <th style="width: 120px;">Mã SP</th>
                             <th>Tên sản phẩm</th>
-                            <th style="width: 80px;">Đơn vị</th>
-                            <th style="width: 100px;">Số lượng</th>
-                            <th style="width: 120px;">Vị trí</th>
-                            <th>Ghi chú</th>
+                            <th style="width: 100px;">Đơn vị</th>
+                            <th style="width: 110px;">Số lượng</th>
+                            <th style="width: 130px;">Vị trí</th>
+                            <th style="width: 200px;">Mô tả</th>
                             <th style="width: 130px;">Ngày tạo</th>
                             <th style="width: 130px;">Cập nhật</th>
-                            <th style="width: 120px;" class="text-center">Thao tác</th>
+                            <th style="width: 130px;" class="text-center">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,41 +276,73 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Id</td>
-                                    <td><span class="badge badge-info" style="color: #000;">@item.ProductCode</span></td>
-                                    <td><strong>@item.ProductName</strong></td>
+                                    <td><strong>#@item.Id</strong></td>
+                                    <td><span class="badge badge-custom badge-code">@item.ProductCode</span></td>
+                                    <td class="product-name">@item.ProductName</td>
                                     <td>@item.ProductUnit</td>
                                     <td>
                                         @if (item.ProductQuantity > 10)
                                         {
-                                            <span class="badge badge-success" style="color: #000;">@item.ProductQuantity</span>
+                                            <span class="badge badge-custom badge-qty-high">
+                                                <i class="fas fa-check-circle mr-1"></i>@item.ProductQuantity
+                                            </span>
                                         }
                                         else if (item.ProductQuantity > 0)
                                         {
-                                            <span class="badge badge-warning" style="color: #000;">@item.ProductQuantity</span>
+                                            <span class="badge badge-custom badge-qty-medium">
+                                                <i class="fas fa-exclamation-triangle mr-1"></i>@item.ProductQuantity
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-danger" style="color: #000;">@item.ProductQuantity</span>
+                                            <span class="badge badge-custom badge-qty-low">
+                                                <i class="fas fa-times-circle mr-1"></i>@item.ProductQuantity
+                                            </span>
                                         }
                                     </td>
-                                    <td>@item.Location</td>
+                                    <td><i class="fas fa-map-marker-alt mr-1" style="color: #667eea;"></i>@item.Location</td>
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.ProductDescription))
                                         {
-                                            @(item.ProductDescription.Length > 30 ? item.ProductDescription.Substring(0, 30) + "..." : item.ProductDescription)
+                                            <small>@(item.ProductDescription.Length > 40 ? item.ProductDescription.Substring(0, 40) + "..." : item.ProductDescription)</small>
+                                        }
+                                        else
+                                        {
+                                            <small class="text-muted">---</small>
                                         }
                                     </td>
-                                    <td><small>@(item.CreateDate.HasValue? item.CreateDate.Value.ToString("dd/MM/yyyy HH:mm") : "")</small></td>
-
-                                    <td><small>@(item.UpdateDate.HasValue? item.UpdateDate.Value.ToString("dd/MM/yyyy HH:mm") : "")</small></td>
+                                    <td>
+                                        <small>
+                                            <i class="far fa-calendar-alt mr-1"></i>
+                                            @(item.CreateDate.HasValue? item.CreateDate.Value.ToString("dd/MM/yyyy") : "---")
+                                            <br>
+                                            <i class="far fa-clock mr-1"></i>
+                                            @(item.CreateDate.HasValue? item.CreateDate.Value.ToString("HH:mm") : "")
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            @if (item.UpdateDate.HasValue)
+                                            {
+                                                <i class="far fa-calendar-alt mr-1"></i>
+                                                @item.UpdateDate.Value.ToString("dd/MM/yyyy")
+                                                <br>
+                                                <i class="far fa-clock mr-1"></i>
+                                                @item.UpdateDate.Value.ToString("HH:mm")
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">---</span>
+                                            }
+                                        </small>
+                                    </td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-sm" href="@Url.Action("Edit", "Product", new { id = item.Id })" title="Sửa">
+                                        <a class="btn btn-action btn-edit" href="@Url.Action("Edit", "Product", new { id = item.Id })" title="Sửa">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <form asp-action="Delete" asp-controller="Product" asp-route-id="@item.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
-                                                <i class="fas fa-trash"></i>
+                                            <button type="submit" class="btn btn-action btn-delete ml-1" title="Xóa">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -97,9 +352,11 @@
                         else
                         {
                             <tr>
-                                <td colspan="10" class="text-center text-muted">
-                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
-                                    <p>Chưa có sản phẩm nào</p>
+                                <td colspan="10">
+                                    <div class="empty-state">
+                                        <i class="fas fa-box-open fa-4x"></i>
+                                        <p>Chưa có sản phẩm nào trong hệ thống</p>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -108,23 +365,25 @@
             </div>
             @if (Model != null && Model.Any())
             {
-                <div class="card-footer clearfix">
-                    <div class="float-left">
-                        <p class="text-muted">
-                            Hiển thị @Model.FirstItemOnPage - @Model.LastItemOnPage của @Model.TotalItemCount sản phẩm
+                <div class="table-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="pagination-info">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Hiển thị <strong>@Model.FirstItemOnPage</strong> - <strong>@Model.LastItemOnPage</strong>
+                            của <strong>@Model.TotalItemCount</strong> sản phẩm
                         </p>
+                        <div>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+                            {
+                                LiElementClasses = new[] { "page-item" },
+                                                PageClasses = new[] { "page-link" },
+                                                UlElementClasses = new[] { "pagination m-0" },
+                                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                                DisplayLinkToLastPage = PagedListDisplayMode.Always
+                                                })
                     </div>
-                    <div class="float-right">
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new {page}), new PagedListRenderOptions
-                        {
-                            LiElementClasses = new[] { "page-item" },
-                                        PageClasses = new[] { "page-link" },
-                                        UlElementClasses = new[] { "pagination pagination-sm m-0" },
-                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                                        DisplayLinkToLastPage = PagedListDisplayMode.Always
-                                        })
                 </div>
             </div>
                         }
