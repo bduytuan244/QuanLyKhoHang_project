@@ -78,8 +78,9 @@
                                             @(item.ProductDescription.Length > 30 ? item.ProductDescription.Substring(0, 30) + "..." : item.ProductDescription)
                                         }
                                     </td>
-                                    <td><small>@item.CreateDate.ToString("dd/MM/yyyy HH:mm")</small></td>
-                                    <td><small>@item.UpdateDate.ToString("dd/MM/yyyy HH:mm")</small></td>
+                                    <td><small>@(item.CreateDate.HasValue? item.CreateDate.Value.ToString("dd/MM/yyyy HH:mm") : "")</small></td>
+
+                                    <td><small>@(item.UpdateDate.HasValue? item.UpdateDate.Value.ToString("dd/MM/yyyy HH:mm") : "")</small></td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" href="@Url.Action("Edit", "Product", new { id = item.Id })" title="Sửa">
                                             <i class="fas fa-edit"></i>
