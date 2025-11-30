@@ -30,13 +30,20 @@ namespace QuanLyKhoHang.Controllers
 
             try
             {
-                // Tự động điền ngày giờ nếu thiếu
+                // 1. Tự động điền ngày giờ nếu thiếu
                 if (model.TransactionDate == DateTime.MinValue)
                 {
                     model.TransactionDate = DateTime.Now;
                 }
 
-                // Lưu vào Database
+                // 2. TỰ ĐỘNG ĐIỀN USERNAME TỪ TOKEN (Quan trọng!)
+                // Lấy tên từ Token mà App Android gửi kèm
+                model.Username = User.Identity?.Name ?? "App Mobile User";
+
+                // 3. Xử lý logic SupplierId = null nếu bằng 0 (để tránh lỗi khóa ngoại)
+                if (model.SupplierId == 0) model.SupplierId = null;
+
+                // 4. Lưu vào Database
                 _context.WarehouseTransactions.Add(model);
                 await _context.SaveChangesAsync();
 
