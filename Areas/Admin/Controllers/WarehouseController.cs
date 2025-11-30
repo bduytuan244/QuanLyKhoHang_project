@@ -200,36 +200,68 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             ModelState.Remove("TransactionType");
             ModelState.Remove("Product");
-            ModelState.Remove("Supplier");      // ← THÊM DÒNG NÀY
-            ModelState.Remove("SupplierId");    // ← THÊM DÒNG NÀY
+            ModelState.Remove("Supplier");
+            ModelState.Remove("SupplierId");
             ModelState.Remove("Username");
 
             if (ModelState.IsValid)
             {
+                // KIỂM TRA SỐ LƯỢNG TỒN KHO TRƯỚC KHI XUẤT
+                var product = await _dbContext.Products.FindAsync(model.ProductId);
+
+                if (product == null)
+                {
+                    TempData["ErrorMessage"] = "Không tìm thấy sản phẩm!";
+                    var productList = _dbContext.Products
+                        .Select(p => new SelectListItem
+                        {
+                            Value = p.Id.ToString(),
+                            Text = $"{p.ProductName} (Tồn: {p.ProductQuantity})"
+                        })
+                        .ToList();
+                    ViewBag.Products = productList;
+                    return View(model);
+                }
+
+                // KIỂM TRA SỐ LƯỢNG XUẤT > SỐ LƯỢNG TỒN
+                if (model.Quantity > product.ProductQuantity)
+                {
+                    TempData["ErrorMessage"] = $"Không thể xuất {model.Quantity} {product.ProductUnit}! Tồn kho hiện tại chỉ có {product.ProductQuantity} {product.ProductUnit}.";
+                    var productList = _dbContext.Products
+                        .Select(p => new SelectListItem
+                        {
+                            Value = p.Id.ToString(),
+                            Text = $"{p.ProductName} (Tồn: {p.ProductQuantity})"
+                        })
+                        .ToList();
+                    ViewBag.Products = productList;
+                    return View(model);
+                }
+
+                // NẾU HỢP LỆ THÌ XUẤT KHO
                 model.TransactionType = "Export";
                 model.TransactionDate = DateTime.Now;
                 model.Username = User.Identity?.Name ?? "Không rõ";
                 _dbContext.WarehouseTransactions.Add(model);
 
-                var product = await _dbContext.Products.FindAsync(model.ProductId);
-                if (product != null)
-                {
-                    product.ProductQuantity -= model.Quantity;
-                    _dbContext.Products.Update(product);
-                }
-                TempData["SuccessMessage"] = "Xuất kho thành công!";
+                product.ProductQuantity -= model.Quantity;
+                _dbContext.Products.Update(product);
+
+                TempData["SuccessMessage"] = $"Xuất kho thành công {model.Quantity} {product.ProductUnit} {product.ProductName}!";
                 await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Export", "Warehouse");
             }
-            var productList = _dbContext.Products
+
+            var products = _dbContext.Products
                 .Select(p => new SelectListItem
                 {
                     Value = p.Id.ToString(),
                     Text = $"{p.ProductName} (Tồn: {p.ProductQuantity})"
                 })
                 .ToList();
-            ViewBag.Products = productList;
+            ViewBag.Products = products;
             return View(model);
         }
+
     }
 }
