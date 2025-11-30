@@ -1,0 +1,47 @@
+﻿@model QuanLyKhoHang.Models.ExportOrder
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<div class="container-fluid mt-3">
+    <div class="card">
+        <div class="card-header bg-info">
+            <h3 class="card-title">Chi tiết đơn: <strong>@Model.OrderCode</strong></h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Ngày tạo:</strong> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p><strong>Người tạo:</strong> @Model.CreatedBy</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <h3>Trạng thái: <span class="badge badge-warning">@Model.Status</span></h3>
+                </div>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Vị trí (Gợi ý)</th>
+                        <th>Số lượng cần lấy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.Details)
+                    {
+                        <tr>
+                            <td>@detail.Product?.ProductName</td>
+                            <td>@detail.Product?.Location</td>
+                            <td class="font-weight-bold text-danger">@detail.Quantity</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>

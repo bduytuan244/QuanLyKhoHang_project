@@ -1,0 +1,134 @@
+﻿@model QuanLyKhoHang.Models.ExportOrder
+
+@{
+    ViewData["Title"] = "Tạo Yêu Cầu Xuất Kho";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <h1>Tạo Lệnh Xuất Kho Mới</h1>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <form asp-action="Create" method="post" id="createOrderForm">
+            <div asp-validation-summary="All" class="text-danger alert alert-warning"></div>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Chọn hàng hóa</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sản phẩm</label>
+                                <select id="ddlProduct" class="form-control" asp-items="ViewBag.Products">
+                                    <option value="">-- Chọn sản phẩm --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Số lượng cần lấy</label>
+                                <input type="number" id="txtQuantity" class="form-control" value="1" min="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display: flex; align-items: flex-end;">
+                            <button type="button" class="btn btn-success btn-block" onclick="addItem()">
+                                <i class="fas fa-plus"></i> Thêm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="card-title">Danh sách hàng cần lấy</h3>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped" id="tblItems">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th style="width: 150px">Số lượng</th>
+                                <th style="width: 100px">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <div id="emptyMessage" class="p-3 text-center text-muted">
+                        Chưa có sản phẩm nào trong danh sách.
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary">Lưu Đơn Hàng</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        var itemIndex = 0;
+
+        function addItem() {
+            // 1. Lấy giá trị từ ô nhập
+            var productId = $("#ddlProduct").val();
+            var productName = $("#ddlProduct option:selected").text();
+            var quantity = $("#txtQuantity").val();
+
+            // 2. Kiểm tra hợp lệ
+            if (productId == "") {
+                alert("Vui lòng chọn sản phẩm!");
+                return;
+            }
+            if (quantity <= 0) {
+                alert("Số lượng phải lớn hơn 0!");
+                return;
+            }
+
+            // 3. Ẩn thông báo trống
+            $("#emptyMessage").hide();
+
+            // 4. Tạo dòng HTML mới (Kỹ thuật MVC Binding: Details[i].ProductId)
+            // Lưu ý: Input type="hidden" để gửi dữ liệu về Server mà không cần hiện ra
+            var rowHtml = `
+                <tr id="row_${itemIndex}">
+                    <td>
+                        ${productName}
+                        <input type="hidden" name="Details[${itemIndex}].ProductId" value="${productId}" />
+                    </td>
+                    <td>
+                        ${quantity}
+                        <input type="hidden" name="Details[${itemIndex}].Quantity" value="${quantity}" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(${itemIndex})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+            // 5. Thêm vào bảng
+            $("#tblItems tbody").append(rowHtml);
+
+            // 6. Tăng chỉ số index và reset ô nhập
+            itemIndex++;
+            $("#txtQuantity").val(1);
+            // $("#ddlProduct").val(""); // Nếu muốn reset cả ô chọn sản phẩm thì bỏ comment dòng này
+        }
+
+        function removeRow(index) {
+            // Xóa dòng tr tương ứng
+            $("#row_" + index).remove();
+        }
+    </script>
+}
