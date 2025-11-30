@@ -2,58 +2,303 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
+<style>
+    .privacy-hero {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+        padding: 80px 0;
+        margin-bottom: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .privacy-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="2" height="2" fill="white" opacity="0.1"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .privacy-hero h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 3rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .privacy-hero p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+    .privacy-section {
+        background: white;
+        border-left: 5px solid #1e3c72;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+
+        .privacy-section:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateX(5px);
+        }
+
+        .privacy-section h3 {
+            color: #1e3c72;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            .privacy-section h3 i {
+                width: 50px;
+                height: 50px;
+                background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px;
+                margin-right: 15px;
+                font-size: 1.3rem;
+            }
+
+        .privacy-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            .privacy-section ul li {
+                padding: 12px 0;
+                padding-left: 35px;
+                position: relative;
+                color: #2c3e50;
+                font-size: 1.05rem;
+            }
+
+                .privacy-section ul li::before {
+                    content: '▸';
+                    position: absolute;
+                    left: 10px;
+                    color: #1e3c72;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
+
+    .privacy-alert {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin: 40px 0;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .privacy-alert h4 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .privacy-alert a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+    .privacy-footer {
+        background: #f8f9fa;
+        padding: 25px;
+        border-top: 3px solid #1e3c72;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .stat-box {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+
+        .stat-box i {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .stat-box h4 {
+            color: #2c3e50;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .stat-box p {
+            color: #7f8c8d;
+            margin: 0;
+        }
+</style>
+
+<div class="privacy-hero">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1><i class="fas fa-shield-halved mr-3"></i>Privacy Policy</h1>
+                <p class="lead mt-3">DTHLogistics cam kết bảo vệ quyền riêng tư và dữ liệu của bạn với tiêu chuẩn bảo mật cấp doanh nghiệp</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">
-                        <i class="fas fa-shield-alt mr-2"></i>@ViewData["Title"]
-                    </h2>
-                </div>
-                <div class="card-body p-4">
-                    <p class="lead">Chào mừng bạn đến với DTHLogistics. Chúng tôi cam kết bảo vệ quyền riêng tư và thông tin cá nhân của bạn.</p>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="fas fa-lock"></i>
+                <h4>256-bit</h4>
+                <p>Mã hóa SSL/TLS</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="fas fa-server"></i>
+                <h4>99.9%</h4>
+                <p>Uptime đảm bảo</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="fas fa-shield-check"></i>
+                <h4>GDPR</h4>
+                <p>Tuân thủ đầy đủ</p>
+            </div>
+        </div>
+    </div>
 
-                    <hr class="my-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="privacy-section">
+                <h3>
+                    <i class="fas fa-database"></i>
+                    Thu thập thông tin
+                </h3>
+                <p style="color: #2c3e50; font-size: 1.05rem; line-height: 1.8;">
+                    Để cung cấp dịch vụ quản lý kho hàng tối ưu, chúng tôi thu thập và xử lý các loại thông tin sau:
+                </p>
+                <ul>
+                    <li><strong>Thông tin tài khoản:</strong> Họ tên, email, số điện thoại, chức vụ</li>
+                    <li><strong>Dữ liệu vận hành:</strong> Lịch sử giao dịch nhập/xuất kho, báo cáo thống kê</li>
+                    <li><strong>Thông tin kỹ thuật:</strong> Địa chỉ IP, loại thiết bị, trình duyệt</li>
+                    <li><strong>Dữ liệu nhà cung cấp:</strong> Thông tin đối tác, lịch sử giao dịch</li>
+                </ul>
+            </div>
 
-                    <h4><i class="fas fa-database mr-2 text-primary"></i>Thu thập thông tin</h4>
-                    <p>Chúng tôi thu thập các thông tin sau:</p>
-                    <ul>
-                        <li>Thông tin tài khoản (tên, email)</li>
-                        <li>Dữ liệu sử dụng hệ thống</li>
-                        <li>Thông tin giao dịch nhập/xuất kho</li>
-                    </ul>
+            <div class="privacy-section">
+                <h3>
+                    <i class="fas fa-shield-virus"></i>
+                    Bảo mật cấp doanh nghiệp
+                </h3>
+                <p style="color: #2c3e50; font-size: 1.05rem; line-height: 1.8;">
+                    DTHLogistics triển khai các biện pháp bảo mật tiên tiến nhất trong ngành logistics:
+                </p>
+                <ul>
+                    <li><strong>Mã hóa end-to-end:</strong> Mọi dữ liệu được mã hóa 256-bit SSL/TLS</li>
+                    <li><strong>Xác thực đa yếu tố (MFA):</strong> Bảo vệ tài khoản với lớp bảo mật bổ sung</li>
+                    <li><strong>Phân quyền chi tiết:</strong> Role-based access control (RBAC) theo cấp độ</li>
+                    <li><strong>Sao lưu tự động:</strong> Backup hàng ngày với khả năng khôi phục nhanh</li>
+                    <li><strong>Giám sát 24/7:</strong> Hệ thống phát hiện và cảnh báo xâm nhập</li>
+                    <li><strong>Audit logs:</strong> Ghi lại mọi hành động để truy vết và tuân thủ</li>
+                </ul>
+            </div>
 
-                    <h4 class="mt-4"><i class="fas fa-lock mr-2 text-primary"></i>Bảo mật thông tin</h4>
-                    <p>Chúng tôi sử dụng các biện pháp bảo mật tiên tiến để bảo vệ dữ liệu của bạn:</p>
-                    <ul>
-                        <li>Mã hóa dữ liệu truyền tải (HTTPS)</li>
-                        <li>Xác thực và phân quyền người dùng</li>
-                        <li>Sao lưu dữ liệu định kỳ</li>
-                    </ul>
+            <div class="privacy-section">
+                <h3>
+                    <i class="fas fa-user-lock"></i>
+                    Sử dụng dữ liệu
+                </h3>
+                <p style="color: #2c3e50; font-size: 1.05rem; line-height: 1.8;">
+                    Thông tin của bạn được sử dụng cho các mục đích sau:
+                </p>
+                <ul>
+                    <li>Vận hành và cải thiện hệ thống quản lý kho</li>
+                    <li>Cung cấp báo cáo và phân tích dữ liệu</li>
+                    <li>Hỗ trợ khách hàng và xử lý sự cố</li>
+                    <li>Tuân thủ các quy định pháp luật và kế toán</li>
+                    <li>Phát hiện và ngăn chặn gian lận</li>
+                </ul>
+            </div>
 
-                    <h4 class="mt-4"><i class="fas fa-share-alt mr-2 text-primary"></i>Chia sẻ thông tin</h4>
-                    <p>Chúng tôi <strong>không</strong> chia sẻ thông tin cá nhân của bạn với bên thứ ba mà không có sự đồng ý của bạn.</p>
+            <div class="privacy-section">
+                <h3>
+                    <i class="fas fa-ban"></i>
+                    Không chia sẻ dữ liệu
+                </h3>
+                <p style="color: #2c3e50; font-size: 1.05rem; line-height: 1.8;">
+                    <strong>DTHLogistics cam kết tuyệt đối:</strong> Chúng tôi <span style="color: #e74c3c; font-weight: 700;">KHÔNG BAO GIỜ</span>
+                    bán, cho thuê hoặc chia sẻ thông tin cá nhân của bạn với bên thứ ba cho mục đích thương mại mà không có sự đồng ý rõ ràng của bạn.
+                </p>
+            </div>
 
-                    <h4 class="mt-4"><i class="fas fa-user-shield mr-2 text-primary"></i>Quyền của bạn</h4>
-                    <p>Bạn có quyền:</p>
-                    <ul>
-                        <li>Truy cập và chỉnh sửa thông tin cá nhân</li>
-                        <li>Yêu cầu xóa dữ liệu</li>
-                        <li>Từ chối thu thập dữ liệu không cần thiết</li>
-                    </ul>
+            <div class="privacy-section">
+                <h3>
+                    <i class="fas fa-hand-holding-heart"></i>
+                    Quyền của bạn
+                </h3>
+                <p style="color: #2c3e50; font-size: 1.05rem; line-height: 1.8;">
+                    Theo quy định GDPR và pháp luật Việt Nam, bạn có các quyền sau:
+                </p>
+                <ul>
+                    <li><strong>Quyền truy cập:</strong> Xem và tải xuống dữ liệu cá nhân của bạn</li>
+                    <li><strong>Quyền chỉnh sửa:</strong> Cập nhật thông tin không chính xác</li>
+                    <li><strong>Quyền xóa:</strong> Yêu cầu xóa dữ liệu (Right to be forgotten)</li>
+                    <li><strong>Quyền hạn chế xử lý:</strong> Tạm dừng xử lý dữ liệu của bạn</li>
+                    <li><strong>Quyền di chuyển dữ liệu:</strong> Xuất dữ liệu sang định dạng khác</li>
+                    <li><strong>Quyền phản đối:</strong> Từ chối xử lý dữ liệu cho mục đích cụ thể</li>
+                </ul>
+            </div>
 
-                    <div class="alert alert-info mt-4">
-                        <i class="fas fa-info-circle mr-2"></i>
-                        <strong>Liên hệ:</strong> Nếu có thắc mắc về chính sách bảo mật, vui lòng liên hệ:
-                        <a href="mailto:support@dthlogistics.com">support@dthlogistics.com</a>
+            <div class="privacy-alert">
+                <h4><i class="fas fa-headset mr-2"></i>Hỗ trợ & Liên hệ</h4>
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    Nếu bạn có bất kỳ thắc mắc nào về chính sách bảo mật hoặc muốn thực hiện các quyền của mình,
+                    vui lòng liên hệ với chúng tôi:
+                </p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <p><i class="fas fa-envelope mr-2"></i><a href="mailto:privacy@dthlogistics.com">privacy@dthlogistics.com</a></p>
                     </div>
-
-                    <p class="text-muted mt-4 mb-0">
-                        <small><i class="far fa-calendar-alt mr-1"></i>Cập nhật lần cuối: 29/11/2025</small>
-                    </p>
+                    <div class="col-md-4">
+                        <p><i class="fas fa-phone mr-2"></i><a href="tel:+84123456789">+84 123 456 789</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><i class="fas fa-clock mr-2"></i>24/7 Support</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="privacy-footer">
+    <div class="container">
+        <p style="color: #2c3e50; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">
+            <i class="fas fa-certificate mr-2"></i>DTHLogistics - Warehouse Management System
+        </p>
+        <p style="color: #7f8c8d; margin: 0;">
+            <i class="far fa-calendar-alt mr-2"></i>Cập nhật lần cuối: <strong>30/11/2025</strong>
+        </p>
     </div>
 </div>

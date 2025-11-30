@@ -3,50 +3,264 @@
     ViewData["Title"] = "Nhập kho";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 style="color: #2c3e50; font-weight: 700;">Nhập kho</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" style="color: #007bff;">Home</a></li>
-                    <li class="breadcrumb-item active" style="color: #6c757d;">Nhập kho</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #20c997;
+    }
+
+        .form-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-list {
+        background: rgba(255,255,255,0.9);
+        color: #28a745;
+        border: none;
+        padding: 8px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-list:hover {
+            background: white;
+            color: #20c997;
+            transform: translateY(-2px);
+        }
+
+    .form-label-custom {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            outline: none;
+        }
+
+    .form-section {
+        padding: 30px;
+    }
+
+    .form-footer {
+        background: #f8f9fa;
+        padding: 20px 30px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .btn-import {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-import:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+            color: white;
+        }
+
+    .btn-cancel {
+        background: white;
+        border: 2px solid #e0e0e0;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: #5a6c7d;
+        transition: all 0.3s ease;
+    }
+
+        .btn-cancel:hover {
+            background: #f8f9fa;
+            border-color: #28a745;
+            color: #28a745;
+            transform: translateY(-2px);
+        }
+
+    .info-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .info-header {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #138496;
+    }
+
+        .info-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+    .info-body {
+        padding: 25px;
+    }
+
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+        .info-list li {
+            padding: 10px 0;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+            .info-list li i {
+                width: 25px;
+                color: #28a745;
+            }
+
+    .success-box {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border-left: 4px solid #28a745;
+        padding: 15px 20px;
+        border-radius: 10px;
+    }
+
+        .success-box i {
+            color: #28a745;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .success-box strong {
+            color: #155724;
+        }
+
+    .required-star {
+        color: #e74c3c;
+        font-weight: 700;
+    }
+
+    .form-hint {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-arrow-down mr-2"></i>Nhập Kho</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Nhập kho</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-success">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-arrow-down mr-2"></i>Phiếu nhập kho
-                        </h3>
-                        <div class="card-tools">
-                            <a class="btn btn-light btn-sm" asp-controller="Warehouse" asp-action="ImportIndex">
-                                <i class="fas fa-list mr-1"></i> Danh sách
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3><i class="fas fa-file-import mr-2"></i>Phiếu nhập kho</h3>
+                            <a class="btn btn-list" asp-controller="Warehouse" asp-action="ImportIndex">
+                                <i class="fas fa-list mr-1"></i>Danh sách
                             </a>
                         </div>
                     </div>
+
                     <form asp-area="Admin" asp-action="Import" asp-controller="Warehouse" method="post">
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
+                        <div class="form-section">
                             <div asp-validation-summary="All" class="alert alert-danger"></div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" style="color: #000; font-weight: 600;">Sản phẩm <span class="text-danger">*</span></label>
+                                        <label class="form-label-custom">
+                                            <i class="fas fa-box mr-2" style="color: #28a745;"></i>Sản phẩm
+                                            <span class="required-star">*</span>
+                                        </label>
                                         <input type="text"
-                                               class="form-control"
+                                               class="form-control form-control-custom"
                                                id="productSearch"
                                                list="productList"
-                                               placeholder="Gõ để tìm kiếm sản phẩm..."
+                                               placeholder="🔍 Gõ để tìm kiếm sản phẩm..."
                                                autocomplete="off" />
                                         <datalist id="productList">
                                             @foreach (var item in ViewBag.Products)
@@ -56,16 +270,22 @@
                                         </datalist>
                                         <input type="hidden" asp-for="ProductId" id="productIdHidden" />
                                         <span asp-validation-for="ProductId" class="text-danger"></span>
+                                        <small class="form-hint">
+                                            <i class="fas fa-lightbulb"></i> Gõ tên hoặc mã sản phẩm để tìm kiếm
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" style="color: #000; font-weight: 600;">Nhà cung cấp <span class="text-danger">*</span></label>
+                                        <label class="form-label-custom">
+                                            <i class="fas fa-truck mr-2" style="color: #28a745;"></i>Nhà cung cấp
+                                            <span class="required-star">*</span>
+                                        </label>
                                         <input type="text"
-                                               class="form-control"
+                                               class="form-control form-control-custom"
                                                id="supplierSearch"
                                                list="supplierList"
-                                               placeholder="Gõ để tìm kiếm nhà cung cấp..."
+                                               placeholder="🔍 Gõ để tìm kiếm nhà cung cấp..."
                                                autocomplete="off" />
                                         <datalist id="supplierList">
                                             @foreach (var item in ViewBag.Suppliers)
@@ -75,48 +295,75 @@
                                         </datalist>
                                         <input type="hidden" asp-for="SupplierId" id="supplierIdHidden" />
                                         <span asp-validation-for="SupplierId" class="text-danger"></span>
+                                        <small class="form-hint">
+                                            <i class="fas fa-lightbulb"></i> Chọn nhà cung cấp từ danh sách
+                                        </small>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="form-label" style="color: #000; font-weight: 600;">Số lượng nhập <span class="text-danger">*</span></label>
-                                <input asp-for="Quantity" type="number" class="form-control" placeholder="Nhập số lượng" min="1" />
+                                <label class="form-label-custom">
+                                    <i class="fas fa-cubes mr-2" style="color: #28a745;"></i>Số lượng nhập
+                                    <span class="required-star">*</span>
+                                </label>
+                                <input asp-for="Quantity"
+                                       type="number"
+                                       class="form-control form-control-custom"
+                                       placeholder="Nhập số lượng"
+                                       min="1" />
                                 <span asp-validation-for="Quantity" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-info-circle"></i> Nhập số lượng sản phẩm nhận được
+                                </small>
                             </div>
+
                             <div class="form-group">
-                                <label class="form-label" style="color: #000; font-weight: 600;">Ghi chú <span class="text-danger">*</span></label>
-                                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Nhập ghi chú..."></textarea>
+                                <label class="form-label-custom">
+                                    <i class="fas fa-sticky-note mr-2" style="color: #28a745;"></i>Ghi chú
+                                    <span class="required-star">*</span>
+                                </label>
+                                <textarea asp-for="Notes"
+                                          class="form-control form-control-custom"
+                                          rows="4"
+                                          placeholder="Nhập ghi chú về lô hàng, mã đơn hàng, tình trạng hàng..."></textarea>
                                 <span asp-validation-for="Notes" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="card-footer bg-white">
-                            <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fas fa-check mr-2"></i> Nhập kho
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-import">
+                                <i class="fas fa-check-circle mr-2"></i>Xác Nhận Nhập Kho
                             </button>
-                            <a asp-controller="Warehouse" asp-action="ImportIndex" class="btn btn-secondary btn-lg">
-                                <i class="fas fa-times mr-2"></i> Hủy
+                            <a asp-controller="Warehouse" asp-action="ImportIndex" class="btn btn-cancel ml-2">
+                                <i class="fas fa-times mr-2"></i>Hủy Bỏ
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-info">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-info-circle mr-2"></i>Hướng dẫn
-                        </h3>
+
+            <div class="col-lg-4">
+                <div class="info-card">
+                    <div class="info-header">
+                        <h3><i class="fas fa-lightbulb mr-2"></i>Hướng dẫn</h3>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled" style="color: #000; font-weight: 500;">
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Gõ vào ô để tìm kiếm nhanh</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Chọn từ danh sách gợi ý</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Nhập số lượng chính xác</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Kiểm tra lại thông tin trước khi lưu</li>
+                    <div class="info-body">
+                        <ul class="info-list">
+                            <li><i class="fas fa-check-circle"></i> Gõ để tìm kiếm sản phẩm nhanh</li>
+                            <li><i class="fas fa-check-circle"></i> Chọn từ danh sách gợi ý</li>
+                            <li><i class="fas fa-check-circle"></i> Chọn đúng nhà cung cấp</li>
+                            <li><i class="fas fa-check-circle"></i> Nhập số lượng chính xác</li>
+                            <li><i class="fas fa-check-circle"></i> Kiểm tra lại trước khi lưu</li>
                         </ul>
-                        <div class="alert alert-warning" style="margin-top: 15px;">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                            <strong>Lưu ý:</strong> Số lượng sẽ tự động cộng vào tồn kho!
+
+                        <div class="success-box">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Lưu ý quan trọng:</strong>
+                            <p style="margin: 10px 0 0 0; color: #155724;">
+                                Số lượng sẽ <strong>tự động cộng</strong> vào tồn kho sau khi xác nhận.
+                                Vui lòng kiểm tra thông tin cẩn thận!
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -128,11 +375,11 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Xử lý khi chọn sản phẩm
-            $('#productSearch').on('input', function() {
+            $('#productSearch').on('input', function () {
                 var selectedProduct = $(this).val();
-                var option = $('#productList option').filter(function() {
+                var option = $('#productList option').filter(function () {
                     return this.value === selectedProduct;
                 });
 
@@ -143,9 +390,9 @@
             });
 
             // Xử lý khi chọn nhà cung cấp
-            $('#supplierSearch').on('input', function() {
+            $('#supplierSearch').on('input', function () {
                 var selectedSupplier = $(this).val();
-                var option = $('#supplierList option').filter(function() {
+                var option = $('#supplierList option').filter(function () {
                     return this.value === selectedSupplier;
                 });
 

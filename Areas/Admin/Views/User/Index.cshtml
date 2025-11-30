@@ -3,71 +3,267 @@
     ViewData["Title"] = "Danh sách người dùng";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Danh sách người dùng</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                    <li class="breadcrumb-item active">Người dùng</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #764ba2;
+    }
+
+        .table-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-add-user {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 8px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-add-user:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+    .table-custom {
+        margin: 0;
+    }
+
+        .table-custom thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+            .table-custom thead th {
+                color: white;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 15px 12px;
+                border: none;
+                vertical-align: middle;
+            }
+
+        .table-custom tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+                transform: scale(1.01);
+            }
+
+        .table-custom tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .user-id {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        color: #5a6c7d;
+        font-size: 0.85rem;
+    }
+
+    .user-name {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+        .user-name i {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+    .user-email {
+        color: #5a6c7d;
+        font-weight: 500;
+    }
+
+        .user-email i {
+            color: #17a2b8;
+            margin-right: 8px;
+        }
+
+    .btn-action {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+    }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+    .empty-state {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+        .empty-state i {
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .empty-state p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-users-cog mr-2"></i>Danh Sách Người Dùng</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Người dùng</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-users mr-2"></i>Quản lý người dùng</h3>
-                <div class="card-tools">
-                    <a class="btn btn-success btn-sm" asp-controller="User" asp-action="Create">
-                        <i class="fas fa-plus"></i> Thêm người dùng
+        <div class="table-card">
+            <div class="table-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3><i class="fas fa-users mr-2"></i>Quản lý người dùng</h3>
+                    <a class="btn btn-add-user" asp-controller="User" asp-action="Create">
+                        <i class="fas fa-user-plus mr-2"></i>Thêm người dùng
                     </a>
                 </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover table-striped">
+            <div class="table-responsive">
+                <table class="table table-custom">
                     <thead>
                         <tr>
-                            <th style="width: 80px;">ID</th>
+                            <th style="width: 60px;">STT</th>
+                            <th style="width: 150px;">User ID</th>
                             <th>Tên người dùng</th>
                             <th>Email</th>
-                            <th style="width: 120px;" class="text-center">Hành động</th>
+                            <th style="width: 150px;" class="text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
+                            int stt = 1;
                             foreach (var u in Model)
                             {
                                 <tr>
-                                    <td><small class="text-muted">@u.Id.Substring(0, 8)...</small></td>
-                                    <td><strong>@u.UserName</strong></td>
-                                    <td>@u.Email</td>
+                                    <td><strong>#@stt</strong></td>
+                                    <td>
+                                        <span class="user-id" title="@u.Id">
+                                            @u.Id.Substring(0, 8)...
+                                        </span>
+                                    </td>
+                                    <td class="user-name">
+                                        <i class="fas fa-user-circle"></i>@u.UserName
+                                    </td>
+                                    <td class="user-email">
+                                        <i class="fas fa-envelope"></i>@u.Email
+                                    </td>
                                     <td class="text-center">
-                                        <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-primary btn-sm" title="Sửa">
+                                        <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-action btn-edit" title="Sửa">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form asp-action="Delete" asp-route-id="@u.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
-                                                <i class="fas fa-trash"></i>
+                                        <form asp-action="Delete" asp-route-id="@u.Id" method="post" style="display:inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">
+                                            <button type="submit" class="btn btn-action btn-delete ml-1" title="Xóa">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
+                                stt++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="4" class="text-center text-muted">
-                                    <i class="fas fa-inbox fa-3x mb-3 mt-3"></i>
-                                    <p>Chưa có người dùng nào</p>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-users-slash fa-4x"></i>
+                                        <p>Chưa có người dùng nào trong hệ thống</p>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -77,4 +273,3 @@
         </div>
     </div>
 </section>
-

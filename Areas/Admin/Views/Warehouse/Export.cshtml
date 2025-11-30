@@ -3,48 +3,262 @@
     ViewData["Title"] = "Xuất kho";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 style="color: #2c3e50; font-weight: 700;">Xuất kho</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" style="color: #007bff;">Home</a></li>
-                    <li class="breadcrumb-item active" style="color: #6c757d;">Xuất kho</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: #000;
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+    }
+
+        .page-header h1 {
+            color: #000;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(0,0,0,0.7);
+        }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #ff9800;
+    }
+
+        .form-header h3 {
+            color: #000;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .btn-list {
+        background: rgba(0,0,0,0.8);
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-list:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .form-label-custom {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-custom {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+            outline: none;
+        }
+
+    .form-section {
+        padding: 30px;
+    }
+
+    .form-footer {
+        background: #f8f9fa;
+        padding: 20px 30px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .btn-export {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        border: none;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: #000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+            color: #000;
+        }
+
+    .btn-cancel {
+        background: white;
+        border: 2px solid #e0e0e0;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        color: #5a6c7d;
+        transition: all 0.3s ease;
+    }
+
+        .btn-cancel:hover {
+            background: #f8f9fa;
+            border-color: #ffc107;
+            color: #ffc107;
+            transform: translateY(-2px);
+        }
+
+    .info-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .info-header {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #c82333;
+    }
+
+        .info-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+    .info-body {
+        padding: 25px;
+    }
+
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+        .info-list li {
+            padding: 10px 0;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+            .info-list li i {
+                width: 25px;
+                color: #28a745;
+            }
+
+    .warning-box {
+        background: linear-gradient(135deg, #fff3cd 0%, #fff8e1 100%);
+        border-left: 4px solid #dc3545;
+        padding: 15px 20px;
+        border-radius: 10px;
+    }
+
+        .warning-box i {
+            color: #dc3545;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .warning-box strong {
+            color: #721c24;
+        }
+
+    .required-star {
+        color: #e74c3c;
+        font-weight: 700;
+    }
+
+    .form-hint {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-arrow-up mr-2"></i>Xuất Kho</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Xuất kho</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-warning">
-                        <h3 class="card-title" style="color: #000; font-weight: 600;">
-                            <i class="fas fa-arrow-up mr-2"></i>Phiếu xuất kho
-                        </h3>
-                        <div class="card-tools">
-                            <a class="btn btn-dark btn-sm" asp-controller="Warehouse" asp-action="ExportIndex">
-                                <i class="fas fa-list mr-1"></i> Danh sách
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3><i class="fas fa-file-export mr-2"></i>Phiếu xuất kho</h3>
+                            <a class="btn btn-list" asp-controller="Warehouse" asp-action="ExportIndex">
+                                <i class="fas fa-list mr-1"></i>Danh sách
                             </a>
                         </div>
                     </div>
+
                     <form asp-area="Admin" asp-action="Export" asp-controller="Warehouse" method="post">
                         @Html.AntiForgeryToken()
-                        <div class="card-body">
+                        <div class="form-section">
                             <div asp-validation-summary="All" class="alert alert-danger"></div>
+
                             <div class="form-group">
-                                <label class="form-label" style="color: #000; font-weight: 600;">Sản phẩm <span class="text-danger">*</span></label>
+                                <label class="form-label-custom">
+                                    <i class="fas fa-box mr-2" style="color: #ffc107;"></i>Sản phẩm
+                                    <span class="required-star">*</span>
+                                </label>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control form-control-custom"
                                        id="productSearch"
                                        list="productList"
-                                       placeholder="Gõ để tìm kiếm sản phẩm..."
+                                       placeholder="🔍 Gõ để tìm kiếm sản phẩm..."
                                        autocomplete="off" />
                                 <datalist id="productList">
                                     @foreach (var item in ViewBag.Products)
@@ -54,46 +268,73 @@
                                 </datalist>
                                 <input type="hidden" asp-for="ProductId" id="productIdHidden" />
                                 <span asp-validation-for="ProductId" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-lightbulb"></i> Gõ tên hoặc mã sản phẩm để tìm kiếm nhanh
+                                </small>
                             </div>
+
                             <div class="form-group">
-                                <label class="form-label" style="color: #000; font-weight: 600;">Số lượng xuất <span class="text-danger">*</span></label>
-                                <input asp-for="Quantity" type="number" class="form-control" placeholder="Nhập số lượng xuất" min="1" />
+                                <label class="form-label-custom">
+                                    <i class="fas fa-cubes mr-2" style="color: #ffc107;"></i>Số lượng xuất
+                                    <span class="required-star">*</span>
+                                </label>
+                                <input asp-for="Quantity"
+                                       type="number"
+                                       class="form-control form-control-custom"
+                                       placeholder="Nhập số lượng xuất"
+                                       min="1" />
                                 <span asp-validation-for="Quantity" class="text-danger"></span>
+                                <small class="form-hint">
+                                    <i class="fas fa-exclamation-circle"></i> Kiểm tra số lượng tồn kho trước khi xuất
+                                </small>
                             </div>
+
                             <div class="form-group">
-                                <label class="form-label" style="color: #000; font-weight: 600;">Ghi chú <span class="text-danger">*</span></label>
-                                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Nhập ghi chú..."></textarea>
+                                <label class="form-label-custom">
+                                    <i class="fas fa-sticky-note mr-2" style="color: #ffc107;"></i>Ghi chú
+                                    <span class="required-star">*</span>
+                                </label>
+                                <textarea asp-for="Notes"
+                                          class="form-control form-control-custom"
+                                          rows="4"
+                                          placeholder="Nhập lý do xuất kho, đơn vị nhận hàng, thông tin vận chuyển..."></textarea>
                                 <span asp-validation-for="Notes" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="card-footer bg-white">
-                            <button type="submit" class="btn btn-warning btn-lg" style="color: #000; font-weight: 600;">
-                                <i class="fas fa-check mr-2"></i> Xuất kho
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-export">
+                                <i class="fas fa-check-circle mr-2"></i>Xác Nhận Xuất Kho
                             </button>
-                            <a asp-controller="Warehouse" asp-action="ExportIndex" class="btn btn-secondary btn-lg">
-                                <i class="fas fa-times mr-2"></i> Hủy
+                            <a asp-controller="Warehouse" asp-action="ExportIndex" class="btn btn-cancel ml-2">
+                                <i class="fas fa-times mr-2"></i>Hủy Bỏ
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-danger">
-                        <h3 class="card-title text-white" style="font-weight: 600;">
-                            <i class="fas fa-exclamation-triangle mr-2"></i>Cảnh báo
-                        </h3>
+
+            <div class="col-lg-4">
+                <div class="info-card">
+                    <div class="info-header">
+                        <h3><i class="fas fa-shield-alt mr-2"></i>Hướng dẫn & Cảnh báo</h3>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled" style="color: #000; font-weight: 500;">
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Gõ vào ô để tìm kiếm nhanh</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Chọn từ danh sách gợi ý</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Kiểm tra số lượng tồn kho</li>
-                            <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Không được xuất quá số tồn</li>
+                    <div class="info-body">
+                        <ul class="info-list">
+                            <li><i class="fas fa-check-circle"></i> Gõ để tìm kiếm sản phẩm nhanh</li>
+                            <li><i class="fas fa-check-circle"></i> Chọn từ danh sách gợi ý</li>
+                            <li><i class="fas fa-check-circle"></i> Kiểm tra số lượng tồn kho</li>
+                            <li><i class="fas fa-check-circle"></i> Không được xuất quá số tồn</li>
+                            <li><i class="fas fa-check-circle"></i> Ghi rõ lý do và đơn vị nhận</li>
                         </ul>
-                        <div class="alert alert-danger" style="margin-top: 15px;">
-                            <i class="fas fa-ban mr-2"></i>
-                            <strong>Lưu ý:</strong> Số lượng xuất sẽ tự động trừ khỏi tồn kho!
+
+                        <div class="warning-box">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>Cảnh báo quan trọng:</strong>
+                            <p style="margin: 10px 0 0 0; color: #721c24;">
+                                Số lượng xuất sẽ <strong>tự động trừ</strong> khỏi tồn kho.
+                                Vui lòng kiểm tra kỹ trước khi xác nhận!
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -105,10 +346,10 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        $(document).ready(function() {
-            $('#productSearch').on('input', function() {
+        $(document).ready(function () {
+            $('#productSearch').on('input', function () {
                 var selectedProduct = $(this).val();
-                var option = $('#productList option').filter(function() {
+                var option = $('#productList option').filter(function () {
                     return this.value === selectedProduct;
                 });
 

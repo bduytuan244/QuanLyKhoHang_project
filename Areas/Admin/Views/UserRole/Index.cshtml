@@ -3,64 +3,284 @@
     ViewData["Title"] = "Quản lý quyền người dùng";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 style="color: #2c3e50; font-weight: 700;">Quản lý quyền người dùng</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" style="color: #3498db;">Home</a></li>
-                    <li class="breadcrumb-item active" style="color: #7f8c8d;">Gán vai trò</li>
-                </ol>
-            </div>
-        </div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .breadcrumb-custom {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .breadcrumb-custom a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .breadcrumb-custom a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-custom .active {
+            color: rgba(255,255,255,0.9);
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px 25px;
+        border-bottom: 3px solid #764ba2;
+    }
+
+        .table-header h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+    .table-custom {
+        margin: 0;
+    }
+
+        .table-custom thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+            .table-custom thead th {
+                color: white;
+                font-weight: 600;
+                font-size: 0.95rem;
+                padding: 15px 12px;
+                border: none;
+                vertical-align: middle;
+            }
+
+        .table-custom tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-custom tbody tr:hover {
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                transform: scale(1.01);
+            }
+
+        .table-custom tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .user-email {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+        .user-email i {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+    .role-badge {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+        margin: 3px;
+        box-shadow: 0 4px 10px rgba(17, 153, 142, 0.3);
+    }
+
+        .role-badge i {
+            margin-right: 5px;
+        }
+
+    .no-role {
+        color: #e74c3c;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+        .no-role i {
+            margin-right: 5px;
+        }
+
+    .btn-assign {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 20px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        font-size: 0.9rem;
+    }
+
+        .btn-assign:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .btn-assign i {
+            margin-right: 8px;
+        }
+
+    .stats-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+        .stats-card h4 {
+            color: #1e3c72;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0 0 5px 0;
+        }
+
+        .stats-card p {
+            color: #5a6c7d;
+            font-weight: 500;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .stats-card i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+</style>
+
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-user-shield mr-2"></i>Quản Lý Quyền Người Dùng</h1>
+        <nav class="breadcrumb-custom mb-0">
+            <a asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-home mr-1"></i>Home
+            </a>
+            <span class="mx-2">/</span>
+            <span class="active">Gán vai trò</span>
+        </nav>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                <h3 class="card-title text-white" style="font-weight: 700;"><i class="fas fa-user-shield mr-2"></i>Phân quyền người dùng</h3>
+        <!-- Stats -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-users"></i>
+                    <h4>@Model.Count</h4>
+                    <p>Tổng người dùng</p>
+                </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover table-striped">
-                    <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-user-check"></i>
+                    <h4>@Model.Count(u => u.Roles.Any())</h4>
+                    <p>Đã có vai trò</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <i class="fas fa-user-times"></i>
+                    <h4>@Model.Count(u => !u.Roles.Any())</h4>
+                    <p>Chưa có vai trò</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3><i class="fas fa-clipboard-list mr-2"></i>Danh sách phân quyền</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-custom">
+                    <thead>
                         <tr>
-                            <th style="color: #fff; font-weight: 700; font-size: 15px;">Email</th>
-                            <th style="color: #fff; font-weight: 700; font-size: 15px;">Vai trò hiện tại</th>
-                            <th style="width: 150px; color: #fff; font-weight: 700; font-size: 15px;" class="text-center">Hành động</th>
+                            <th style="width: 60px;">STT</th>
+                            <th>Email người dùng</th>
+                            <th>Vai trò hiện tại</th>
+                            <th style="width: 180px;" class="text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model.Any())
                         {
-                            <tr>
-                                <td style="color: #2c3e50; font-weight: 600; font-size: 15px;"><strong>@item.User.Email</strong></td>
-                                <td>
-                                    @if (item.Roles.Any())
-                                    {
-                                        foreach (var role in item.Roles)
+                            int stt = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>#@stt</strong></td>
+                                    <td class="user-email">
+                                        <i class="fas fa-user-circle"></i>@item.User.Email
+                                    </td>
+                                    <td>
+                                        @if (item.Roles.Any())
                                         {
-                                            <span class="badge mr-1" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #fff; font-size: 14px; padding: 8px 14px; font-weight: 700; border-radius: 20px;">
-                                                <i class="fas fa-user-tag mr-1"></i>@role
+                                            foreach (var role in item.Roles)
+                                            {
+                                                <span class="role-badge">
+                                                    <i class="fas fa-user-tag"></i>@role
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="no-role">
+                                                <i class="fas fa-exclamation-circle"></i>Chưa có vai trò
                                             </span>
                                         }
-                                    }
-                                    else
-                                    {
-                                        <span style="color: #e74c3c; font-weight: 600; font-size: 14px;">
-                                            <i class="fas fa-exclamation-circle mr-1"></i> Chưa có vai trò
-                                        </span>
-                                    }
-                                </td>
-                                <td class="text-center">
-                                    <a asp-action="Manage" asp-route-userId="@item.User.Id" class="btn btn-sm" title="Gán vai trò"
-                                       style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; font-weight: 600; padding: 8px 16px; border-radius: 20px;">
-                                        <i class="fas fa-user-cog mr-1"></i> Gán vai trò
-                                    </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-action="Manage" asp-route-userId="@item.User.Id" class="btn btn-assign" title="Gán vai trò">
+                                            <i class="fas fa-user-cog"></i>Gán vai trò
+                                        </a>
+                                    </td>
+                                </tr>
+                                stt++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">
+                                    <div style="padding: 60px 20px; text-align: center;">
+                                        <i class="fas fa-users-slash fa-4x" style="color: #bdc3c7; margin-bottom: 20px;"></i>
+                                        <p style="color: #7f8c8d; font-size: 1.1rem; margin: 0;">Chưa có người dùng nào</p>
+                                    </div>
                                 </td>
                             </tr>
                         }
