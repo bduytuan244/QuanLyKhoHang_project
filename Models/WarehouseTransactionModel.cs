@@ -14,7 +14,7 @@ namespace QuanLyKhoHang.Models
         public int? SupplierId { get; set; }  // ← THÊM DẤU ? ĐỂ CHO PHÉP NULL
 
         public SupplierModel? Supplier { get; set; }  // ← THÊM ? CHO SUPPLIER
-        public ProductModel Product { get; set; }
+        public ProductModel? Product { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số lượng sản phẩm")]
         [Range(1, int.MaxValue, ErrorMessage = "Số lượng sản phẩm phải lớn hơn 0")]
