@@ -25,7 +25,8 @@ namespace QuanLyKhoHang.Controllers
         public async Task<ActionResult<IEnumerable<ExportOrder>>> GetPendingOrders()
         {
             var orders = await _context.ExportOrders
-                .Where(o => o.Status == "New") // Chỉ lấy đơn mới
+                .Where(o => o.Status == "New")
+                .Include(o => o.Details) // <--- THÊM DÒNG NÀY ĐỂ LẤY CHI TIẾT
                 .OrderByDescending(o => o.CreatedDate)
                 .ToListAsync();
             return Ok(orders);
@@ -38,7 +39,7 @@ namespace QuanLyKhoHang.Controllers
         {
             var order = await _context.ExportOrders
                 .Include(o => o.Details)
-                .ThenInclude(d => d.Product) // Kèm thông tin sản phẩm (Tên, Vị trí)
+                .ThenInclude(d => d.Product) // <--- QUAN TRỌNG: Lấy thêm tên sản phẩm
                 .FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (order == null) return NotFound();
