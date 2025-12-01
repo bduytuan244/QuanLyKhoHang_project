@@ -4,44 +4,194 @@
     ViewData["Title"] = "Chi tiết đơn hàng";
 }
 
+<style>
+    .detail-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(20,35,60,0.13);
+        overflow: hidden;
+    }
+    
+    .detail-card .card-header {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: #fff;
+        padding: 1.5rem;
+        border-radius: 16px 16px 0 0 !important;
+    }
+    
+    .detail-card .card-header h3 {
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        margin: 0;
+    }
+    
+    .detail-card .card-header strong {
+        color: #fff3cd;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .info-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-section p {
+        margin-bottom: 0.8rem;
+        font-size: 1.05rem;
+        color: #283554;
+    }
+    
+    .info-section strong {
+        font-weight: 700;
+        color: #1a2332;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 0.6rem 1.5rem;
+        border-radius: 25px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #000;
+        box-shadow: 0 4px 12px rgba(255,193,7,0.4);
+    }
+    
+    .detail-table {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .detail-table thead {
+        background: linear-gradient(90deg, #283554 80%, #33425b 100%);
+    }
+    
+    .detail-table thead th {
+        color: #000000 !important;
+        font-weight: 700;
+        border: none !important;
+        padding: 1rem;
+        font-size: 1.05rem;
+    }
+    
+    .detail-table tbody tr {
+        transition: all 0.2s ease;
+    }
+    
+    .detail-table tbody tr:nth-of-type(odd) {
+        background: #f5f8fa;
+    }
+    
+    .detail-table tbody tr:hover {
+        background: #e8f4f8;
+        transform: scale(1.01);
+    }
+    
+    .detail-table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+        font-size: 1.02rem;
+        color: #000000;
+    }
+    
+    .product-name {
+        font-weight: 600;
+        color: #000000;
+    }
+    
+    .location-cell {
+        color: #000000;
+        font-weight: 500;
+    }
+    
+    .location-cell::before {
+        content: "📍 ";
+    }
+    
+    .quantity-cell {
+        font-weight: 700 !important;
+        color: #000000 !important;
+        font-size: 1.15rem !important;
+        text-align: center;
+    }
+    
+    .detail-card .card-footer {
+        background: linear-gradient(90deg, #243b55 70%, #283554 100%);
+        padding: 1.2rem 1.5rem;
+        border-radius: 0 0 16px 16px !important;
+    }
+    
+    .btn-back {
+        background: #eeeeee;
+        color: #243b55;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 0.6rem 2rem;
+        border: none;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-back:hover {
+        background: #ffffff;
+        color: #17a2b8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .page-title {
+        color: #243b55;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+</style>
+
 <div class="container-fluid mt-3">
-    <div class="card">
-        <div class="card-header bg-info">
-            <h3 class="card-title">Chi tiết đơn: <strong>@Model.OrderCode</strong></h3>
+    <div class="card detail-card">
+        <div class="card-header">
+            <h3>Chi tiết đơn: <strong>@Model.OrderCode</strong></h3>
         </div>
         <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Ngày tạo:</strong> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</p>
-                    <p><strong>Người tạo:</strong> @Model.CreatedBy</p>
-                </div>
-                <div class="col-md-6 text-right">
-                    <h3>Trạng thái: <span class="badge badge-warning">@Model.Status</span></h3>
+            <div class="info-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>📅 Ngày tạo:</strong> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</p>
+                        <p><strong>👤 Người tạo:</strong> @Model.CreatedBy</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p style="margin-bottom: 0.5rem; font-size: 1.1rem; color: #283554;"><strong>Trạng thái đơn hàng:</strong></p>
+                        <span class="status-badge">@Model.Status</span>
+                    </div>
                 </div>
             </div>
 
-            <table class="table table-bordered">
+            <table class="table detail-table">
                 <thead>
                     <tr>
                         <th>Sản phẩm</th>
                         <th>Vị trí (Gợi ý)</th>
-                        <th>Số lượng cần lấy</th>
+                        <th style="text-align: center;">Số lượng cần lấy</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var detail in Model.Details)
                     {
                         <tr>
-                            <td>@detail.Product?.ProductName</td>
-                            <td>@detail.Product?.Location</td>
-                            <td class="font-weight-bold text-danger">@detail.Quantity</td>
+                            <td class="product-name">@detail.Product?.ProductName</td>
+                            <td class="location-cell">@detail.Product?.Location</td>
+                            <td class="quantity-cell">@detail.Quantity</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
         <div class="card-footer">
-            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            <a asp-action="Index" class="btn btn-back">
+                <i class="fas fa-arrow-left me-2"></i>Quay lại
+            </a>
         </div>
     </div>
 </div>

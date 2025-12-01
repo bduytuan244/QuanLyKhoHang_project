@@ -4,6 +4,106 @@
     ViewData["Title"] = "Tạo Yêu Cầu Xuất Kho";
 }
 
+<style>
+    .card-primary {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(20,35,60,0.13);
+        overflow: hidden;
+    }
+    .card-header {
+        border-radius: 16px 16px 0 0 !important;
+    }
+    .card-header.bg-warning {
+        background: linear-gradient(90deg,#ffc107 80%,#fffde4 100%) !important;
+        color: #424242 !important;
+        font-weight: 700;
+    }
+    .card-title {
+        letter-spacing: .05em;
+    }
+    .form-group label {
+        font-weight: 600;
+        letter-spacing: .01em;
+        color: #283554;
+    }
+    .form-control, select.form-control {
+        border-radius: 10px;
+        border: 2px solid #e3e7ed;
+        padding: 10px 16px;
+        font-size: 1.04rem;
+        transition: border 0.2s;
+        background: #f5f7fa;
+    }
+    .form-control:focus, select.form-control:focus {
+        border-color: #243b55;
+        box-shadow: 0 0 0 0.14rem rgba(36,59,85,.08);
+        background: #fff;
+    }
+    .btn-success, .btn-primary {
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: .03em;
+        box-shadow: 0 2px 12px rgba(40,167,69,0.06);
+    }
+    .btn-danger.btn-sm {
+        border-radius: 6px;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background: #f5f8fa !important;
+    }
+    #tblItems th {
+        background: linear-gradient(90deg,#283554 80%,#33425b 100%);
+        color: #ffffff !important;
+        font-weight: 700;
+        border: none !important;
+    }
+    #tblItems td {
+        vertical-align: middle;
+        font-size: 1.02rem;
+    }
+    #tblItems td button.btn {
+        box-shadow: none;
+        transition: background .15s;
+    }
+    #tblItems td button.btn:hover {
+        background: #b71c1c;
+    }
+    #emptyMessage {
+        background: #fffce5;
+        border: 1.5px dashed #ffc107;
+        border-radius: 10px;
+        font-style: italic;
+        font-size: 1.07rem;
+        margin-top: 18px;
+    }
+    .alert-warning {
+        background: #fff7d1 !important;
+        color: #8a6d3b;
+    }
+    .card-footer {
+        padding: 1rem 2rem;
+        background: linear-gradient(90deg,#243b55 70%, #283554 100%);
+        border-radius: 0 0 16px 16px !important;
+    }
+    .card-footer .btn-secondary {
+        background: #eeeeee;
+        color: #243b55;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    .card-footer .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: #fff;
+    }
+    .content-header h1 {
+        font-weight: 700;
+        color: #243b55;
+        letter-spacing: 0.03em;
+    }
+</style>
+
 <div class="content-header">
     <div class="container-fluid">
         <h1>Tạo Lệnh Xuất Kho Mới</h1>

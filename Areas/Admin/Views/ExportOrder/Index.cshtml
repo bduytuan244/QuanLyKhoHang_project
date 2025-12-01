@@ -4,61 +4,213 @@
     ViewData["Title"] = "Quản lý Soạn hàng";
 }
 
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Danh sách Yêu cầu Soạn hàng</h1>
-            </div>
-            <div class="col-sm-6">
-                <a asp-action="Create" class="btn btn-success float-sm-right">
-                    <i class="fas fa-plus"></i> Tạo Yêu Cầu Mới
-                </a>
-            </div>
-        </div>
+<style>
+    .page-header-export {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 25px 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+        .page-header-export h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .btn-create-new {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 10px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .btn-create-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+    .table-card-export {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .table-export {
+        margin: 0;
+    }
+
+        .table-export thead {
+            background: linear-gradient(90deg, #283554 80%, #33425b 100%);
+        }
+
+            .table-export thead th {
+                color: #000000 !important;
+                font-weight: 700;
+                border: none !important;
+                padding: 15px 12px;
+                font-size: 0.95rem;
+                vertical-align: middle;
+            }
+
+        .table-export tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .table-export tbody tr:hover {
+                background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+                transform: scale(1.01);
+            }
+
+        .table-export tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+    .order-code {
+        color: #667eea;
+        font-weight: 700;
+        font-size: 1.05rem;
+        font-family: 'Courier New', monospace;
+    }
+
+    .badge-status {
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 20px;
+    }
+
+    .badge-new {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .badge-done {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+
+    .badge-other {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #000;
+    }
+
+    .btn-view {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        border: none;
+        padding: 6px 16px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+            color: white;
+        }
+
+    .item-count {
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .created-by {
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .created-date {
+        color: #6c757d;
+    }
+</style>
+
+<div class="page-header-export">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><i class="fas fa-boxes me-2"></i>Danh Sách Yêu Cầu Soạn Hàng</h1>
+        <a asp-action="Create" class="btn btn-create-new">
+            <i class="fas fa-plus me-2"></i>Tạo Yêu Cầu Mới
+        </a>
     </div>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+        <div class="table-card-export">
+            <div class="table-responsive">
+                <table class="table table-export table-hover">
                     <thead>
                         <tr>
-                            <th>Mã đơn</th>
-                            <th>Ngày tạo</th>
-                            <th>Người tạo</th>
-                            <th>Số lượng món</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
+                            <th style="width: 150px;">Mã đơn</th>
+                            <th style="width: 180px;">Ngày tạo</th>
+                            <th style="width: 150px;">Người tạo</th>
+                            <th style="width: 120px;">Số lượng món</th>
+                            <th style="width: 130px;">Trạng thái</th>
+                            <th style="width: 120px;">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td><strong>@item.OrderCode</strong></td>
-                                <td>@item.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>@item.CreatedBy</td>
-                                <td>@item.Details?.Count() món</td>
+                                <td>
+                                    <span class="order-code">@item.OrderCode</span>
+                                </td>
+                                <td>
+                                    <span class="created-date">
+                                        <i class="fas fa-calendar-alt me-1"></i>
+                                        @item.CreatedDate.ToString("dd/MM/yyyy HH:mm")
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="created-by">
+                                        <i class="fas fa-user me-1"></i>
+                                        @item.CreatedBy
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="item-count">
+                                        <i class="fas fa-box me-1"></i>
+                                        @item.Details?.Count() món
+                                    </span>
+                                </td>
                                 <td>
                                     @if (item.Status == "New")
                                     {
-                                        <span class="badge badge-primary">Mới tạo</span>
+                                        <span class="badge badge-status badge-new">
+                                            <i class="fas fa-star me-1"></i>Mới tạo
+                                        </span>
                                     }
                                     else if (item.Status == "Done")
                                     {
-                                        <span class="badge badge-success">Đã xong</span>
+                                        <span class="badge badge-status badge-done">
+                                            <i class="fas fa-check-circle me-1"></i>Đã xong
+                                        </span>
                                     }
                                     else
                                     {
-                                        <span class="badge badge-warning">@item.Status</span>
+                                        <span class="badge badge-status badge-other">
+                                            <i class="fas fa-clock me-1"></i>@item.Status
+                                        </span>
                                     }
                                 </td>
                                 <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">
-                                        <i class="fas fa-eye"></i> Xem
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-view">
+                                        <i class="fas fa-eye me-1"></i>Xem
                                     </a>
                                 </td>
                             </tr>
