@@ -18,7 +18,29 @@ namespace QuanLyKhoHang.Controllers
         {
             _context = context;
         }
+        [HttpPost("start/{orderId}")]
+        public async Task<IActionResult> StartPicking(int orderId)
+        {
+            var order = await _context.ExportOrders.FindAsync(orderId);
 
+            if (order == null) return NotFound("Không tìm thấy đơn hàng.");
+
+            if (order.Status != "New")
+            {
+                return BadRequest("Đơn hàng này đã có người khác nhận hoặc đã hoàn thành!");
+            }
+
+            // 1. Cập nhật trạng thái
+            order.Status = "Picking";
+
+            // 2. LƯU TÊN NGƯỜI LẤY HÀNG (Lấy từ Token)
+            order.Picker = User.Identity?.Name ?? "Unknown Staff";
+            // -----------------------------------------------
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Bắt đầu soạn hàng!" });
+        }
         // 1. Lấy danh sách các đơn đang chờ soạn hàng (Status = "New")
         // GET: api/OrderPicking/pending
         [HttpGet("pending")]
@@ -63,6 +85,30 @@ namespace QuanLyKhoHang.Controllers
 
             await _context.SaveChangesAsync();
             return Ok(new { message = "Đã hoàn thành soạn hàng!" });
+        }
+        // 5. Hủy nhận đơn (Nhả đơn về trạng thái New)
+        // POST: api/OrderPicking/cancel/5
+        [HttpPost("cancel/{orderId}")]
+        public async Task<IActionResult> CancelPicking(int orderId)
+        {
+            var order = await _context.ExportOrders.FindAsync(orderId);
+
+            if (order == null) return NotFound("Không tìm thấy đơn hàng.");
+
+            // Chỉ cho phép hủy nếu đơn đang ở trạng thái Picking
+            if (order.Status == "Picking")
+            {
+                // 1. Trả về trạng thái New
+                order.Status = "New";
+
+                // 2. Xóa người lấy (để người khác có thể nhận)
+                order.Picker = null;
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Đã hủy nhận đơn, đơn hàng quay về hàng chờ!" });
+            }
+
+            return BadRequest("Không thể hủy đơn này (Đơn đã xong hoặc chưa nhận).");
         }
     }
 }
