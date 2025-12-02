@@ -147,7 +147,19 @@
         </a>
     </div>
 </div>
-
+<form asp-action="Index" method="get" class="form-inline">
+    <div class="input-group input-group-sm" style="width: 350px;">
+        <input type="text" name="searchString" class="form-control"
+               placeholder="Tìm mã đơn, người tạo..."
+               value="@ViewData["CurrentFilter"]">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Tìm
+            </button>
+            <a asp-action="Index" class="btn btn-outline-danger ml-1">Xóa</a>
+        </div>
+    </div>
+</form>
 <section class="content">
     <div class="container-fluid">
         <div class="table-card-export">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuanLyKhoHang.Models;
@@ -15,14 +16,33 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, string searchString) // Thêm tham số searchString
         {
+            // Lưu lại từ khóa để hiện lại trên ô input
+            ViewData["CurrentFilter"] = searchString;
+
+            // Bước 1: Tạo truy vấn cơ bản
+            var productsQuery = from p in _dbContext.Products
+                                select p;
+
+            // Bước 2: Lọc nếu có từ khóa
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productsQuery = productsQuery.Where(p => p.ProductName.Contains(searchString)
+                                                      || p.ProductCode.Contains(searchString)
+                                                      || p.Location.Contains(searchString));
+            }
+
+            // Bước 3: Sắp xếp (Mới nhất lên đầu)
+            productsQuery = productsQuery.OrderByDescending(p => p.Id);
+
+            // Bước 4: Phân trang
             int pageSize = 5;
             int pageNumber = page ?? 1;
 
-            var products = _dbContext.Products.OrderBy(p => p.Id);
+            // Chuyển đổi kết quả cuối cùng sang PagedList
+            var pagedProducts = productsQuery.ToPagedList(pageNumber, pageSize);
 
-            var pagedProducts = products.ToPagedList(pageNumber, pageSize);
             return View(pagedProducts);
         }
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuanLyKhoHang.Models;
 using QuanLyKhoHang.Repository;
 
@@ -14,11 +15,29 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var suppliers = _dbContext.Supplier.ToList();
-            return View(suppliers);
+            // Lưu lại từ khóa để hiển thị trên ô tìm kiếm
+            ViewData["CurrentFilter"] = searchString;
+
+            // Tạo truy vấn cơ bản (chưa chạy ngay)
+            // Lưu ý: Kiểm tra lại tên bảng trong DataContext là 'Supplier' hay 'Suppliers' nhé
+            var suppliers = from s in _dbContext.Supplier
+                            select s;
+
+            // Lọc dữ liệu nếu có từ khóa
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                suppliers = suppliers.Where(s => s.Name.Contains(searchString)
+                                              || s.Address.Contains(searchString)
+                                              || s.Phone.Contains(searchString)
+                                              || s.Email.Contains(searchString));
+            }
+
+            // Sắp xếp ID giảm dần (Mới nhất lên đầu) và trả về View
+            return View(await suppliers.OrderByDescending(s => s.Id).ToListAsync());
         }
+
         [HttpGet]
         public IActionResult Create()
         {

@@ -19,15 +19,34 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
         }
 
         // 1. Danh sách đơn hàng
-        public async Task<IActionResult> Index()
+        // 1. Danh sách đơn hàng (Có tìm kiếm)
+        public async Task<IActionResult> Index(string searchString) // Thêm tham số searchString
         {
-            var orders = await _context.ExportOrders
-                .Include(o => o.Details) // Kèm chi tiết
+            // Lưu từ khóa để hiện lại
+            ViewData["CurrentFilter"] = searchString;
+
+            // Bước 1: Query cơ bản
+            var ordersQuery = _context.ExportOrders
+                .Include(o => o.Details)
+                .AsQueryable(); // Để dễ nối chuỗi lệnh
+
+            // Bước 2: Lọc dữ liệu
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                ordersQuery = ordersQuery.Where(o =>
+                    o.OrderCode.Contains(searchString) ||           // Tìm theo Mã đơn
+                    o.CreatedBy.Contains(searchString) ||           // Tìm theo Người tạo
+                    o.CreatedDate.ToString().Contains(searchString) // Tìm theo Ngày (dạng chuỗi)
+                );
+            }
+
+            // Bước 3: Sắp xếp và Lấy dữ liệu
+            var orders = await ordersQuery
                 .OrderByDescending(o => o.CreatedDate)
                 .ToListAsync();
+
             return View(orders);
         }
-
         // 2. Xem chi tiết 1 đơn
         public async Task<IActionResult> Details(int id)
         {

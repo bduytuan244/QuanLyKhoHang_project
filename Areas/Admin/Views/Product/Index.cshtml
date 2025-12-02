@@ -242,7 +242,19 @@
         </nav>
     </div>
 </div>
-
+<form asp-action="Index" method="get">
+    <div class="input-group mb-3" style="max-width: 400px;">
+        <input type="text" name="searchString" class="form-control"
+               placeholder="Tìm tên, mã SP, vị trí..."
+               value="@ViewData["CurrentFilter"]">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="fas fa-search"></i> Tìm
+            </button>
+            <a asp-action="Index" class="btn btn-outline-danger">Xóa</a>
+        </div>
+    </div>
+</form>
 <section class="content">
     <div class="container-fluid">
         <div class="table-card">

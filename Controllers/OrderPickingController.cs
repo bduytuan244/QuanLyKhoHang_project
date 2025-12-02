@@ -97,7 +97,7 @@ namespace QuanLyKhoHang.Controllers
 
             // Chỉ cho phép hủy nếu đơn đang ở trạng thái Picking
             if (order.Status == "Picking")
-            {
+            {   
                 // 1. Trả về trạng thái New
                 order.Status = "New";
 

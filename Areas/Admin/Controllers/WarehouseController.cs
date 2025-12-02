@@ -110,28 +110,68 @@ namespace QuanLyKhoHang.Areas.Admin.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
-        public async Task<IActionResult> ImportIndex()
+        // 1. Thêm tham số searchString
+        public async Task<IActionResult> ImportIndex(string searchString)
         {
-            var imports = await _dbContext.WarehouseTransactions
+            // Lưu lại từ khóa để hiển thị lại trên ô tìm kiếm
+            ViewData["CurrentFilter"] = searchString;
+
+            // Bước 1: Lấy Query cơ bản (Chưa thực thi)
+            var imports = _dbContext.WarehouseTransactions
                 .Include(t => t.Product)
                 .Include(t => t.Supplier)
-                .Where(t => t.TransactionType == "Import")
+                .Where(t => t.TransactionType == "Import");
+
+            // Bước 2: Áp dụng bộ lọc nếu có từ khóa
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường (tùy chọn)
+                // Ở đây mình dùng Contains trực tiếp vì EF Core tự xử lý
+                imports = imports.Where(t =>
+                    t.Product.ProductName.Contains(searchString) || // Tìm theo tên SP
+                    t.Supplier.Name.Contains(searchString) ||       // Tìm theo NCC
+                    t.Username.Contains(searchString) ||            // Tìm theo người làm
+                    t.TransactionDate.ToString().Contains(searchString) // Tìm theo ngày (cơ bản)
+                );
+            }
+
+            // Bước 3: Sắp xếp và Thực thi
+            var result = await imports
                 .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync();
 
-            return View(imports);
+            return View(result);
         }
-        public async Task<IActionResult> ExportIndex()
+        // Thêm tham số searchString
+        public async Task<IActionResult> ExportIndex(string searchString)
         {
-            var exports = await _dbContext.WarehouseTransactions
+            // Lưu lại từ khóa để hiện lại trên ô tìm kiếm
+            ViewData["CurrentFilter"] = searchString;
+
+            // Bước 1: Tạo Query cơ bản
+            var exports = _dbContext.WarehouseTransactions
                 .Include(t => t.Product)
-                .Where(t => t.TransactionType == "Export")
+                // .Include(t => t.Supplier) // Xuất kho không cần Supplier
+                .Where(t => t.TransactionType == "Export");
+
+            // Bước 2: Lọc dữ liệu nếu có từ khóa
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                exports = exports.Where(t =>
+                    t.Product.ProductName.Contains(searchString) || // Tìm theo Tên SP
+                    t.Username.Contains(searchString) ||            // Tìm theo Người thực hiện
+                    t.Notes.Contains(searchString) ||               // Tìm theo Ghi chú
+                    t.TransactionDate.ToString().Contains(searchString) // Tìm theo Ngày
+                );
+            }
+
+            // Bước 3: Sắp xếp và Lấy dữ liệu
+            var result = await exports
                 .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync();
 
-            return View(exports);
+            return View(result);
         }
-
         [HttpGet]
         public IActionResult Import()
         {
