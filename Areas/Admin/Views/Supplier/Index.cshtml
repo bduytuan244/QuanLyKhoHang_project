@@ -177,6 +177,71 @@
             font-size: 1.1rem;
             margin: 0;
         }
+    /* --- SEARCH BAR STYLE --- */
+    .search-container {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+    }
+
+    .search-input-group {
+        border: 1px solid #e0e0e0;
+        border-radius: 50px;
+        padding: 5px;
+        transition: all 0.3s;
+        background: #f8f9fa;
+    }
+
+        .search-input-group:focus-within {
+            border-color: #dc3545; /* Viền đỏ khi focus */
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+            background: white;
+        }
+
+    .search-input {
+        border: none;
+        background: transparent;
+        padding-left: 15px;
+        font-size: 1rem;
+        height: 40px;
+    }
+
+        .search-input:focus {
+            background: transparent;
+            box-shadow: none;
+        }
+
+    .btn-search-custom {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); /* Nút tìm màu đỏ */
+        color: white;
+        border-radius: 50px;
+        padding: 8px 25px;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+        .btn-search-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+    .btn-reset-custom {
+        color: #6c757d;
+        background: white;
+        border: 1px solid #6c757d;
+        border-radius: 50px;
+        padding: 8px 20px;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-left: 10px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
 </style>
 
 <div class="page-header">
@@ -191,21 +256,33 @@
         </nav>
     </div>
 </div>
-<form asp-action="Index" method="get" class="form-inline ml-3">
-    <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search"
-               placeholder="Tìm tên,địa chỉ, sđt, email..." aria-label="Search"
-               name="searchString" value="@ViewData["CurrentFilter"]">
-        <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit" style="background-color: #eee;">
-                <i class="fas fa-search"></i>
-            </button>
-            <a asp-action="Index" class="btn btn-danger btn-sm ml-1">
-                <i class="fas fa-times"></i>
-            </a>
+<div class="search-container">
+    <form asp-action="Index" method="get">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="input-group search-input-group">
+                    <input type="text" name="searchString" class="form-control search-input"
+                           placeholder="Tìm tên, địa chỉ, sđt, email..."
+                           value="@ViewData["CurrentFilter"]">
+                    <div class="input-group-append">
+                        <button class="btn btn-search-custom" type="submit">
+                            <i class="fas fa-search mr-1"></i> Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
+            {
+                <div class="col-md-4">
+                    <a asp-action="Index" class="btn btn-reset-custom">
+                        <i class="fas fa-times mr-1"></i> Xóa bộ lọc
+                    </a>
+                </div>
+            }
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <section class="content">
     <div class="container-fluid">
         <div class="table-card">
